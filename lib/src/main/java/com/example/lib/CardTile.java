@@ -4,14 +4,14 @@ package com.example.lib;
  * Created by Kelly on 4/16/2018.
  */
 
-public class CardTiles extends Tiles {
+public class CardTile extends Tile {
   public Card[] cardlist;
   
   //when created generates random list of cards
   
   
-  public CardTiles(String name, double value, int pos, Card[] cardlist) {
-    super(name, value, pos);
+  public CardTile(String name, int pos, String imgFile, Card[] cardlist) {
+    super(name, pos, imgFile);
     this.cardlist = cardlist;
   }
   

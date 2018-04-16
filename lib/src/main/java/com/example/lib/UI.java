@@ -10,7 +10,7 @@ public class UI implements Interaction {
   Scanner sc = new Scanner(System.in);
   
   @Override
-  public void updateUI(Tiles[] tiles, Player[] players) {
+  public void updateUI(Tile[] tiles, Player[] players) {
     System.out.println("board");
   }
   
@@ -26,8 +26,13 @@ public class UI implements Interaction {
   }
   
   @Override
-  public int rollDice() {
-    return 2; //
+  public void addPlayer(Player p){
+    System.out.println("dfgsdg");
+  }
+  
+  @Override
+  public void addTile(Tile t){
+    System.out.println("fgsdfg");
   }
   
   @Override

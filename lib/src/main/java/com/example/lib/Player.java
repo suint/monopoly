@@ -23,8 +23,12 @@ public class Player {
     return false;
   }
   
-  public void rollDice(){
-    playerPos++; //would be random 1-6
+  public int rollDice(){
+    return 2;
+  }
+  
+  public void move(){
+    playerPos = playerPos + rollDice(); //would be random 1-6
   }
   
   //based on player’s location; calls different methods from the corresponding tiles class; updates user

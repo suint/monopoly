@@ -6,10 +6,13 @@ package com.example.lib;
 
 public interface Interaction {
   //rewrites board to match current state of game
-  void updateUI(Tiles[] tiles, Player[] players);
+  void updateUI(Tile[] tiles, Player[] players);
+  //shows instructions
   void showIntro();
+  //allows user to say yes, no etc. to decisions like buying property
   String getUserInput();
-  int rollDice();
-  //calls the random number generator and also updates player’s current location
+  //shows ending screen - rankings etc.
   void showEnd();
+  void addPlayer(Player p);
+  void addTile(Tile t);
 }
