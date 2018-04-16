@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class UI implements Interaction {
   
   Scanner sc = new Scanner(System.in);
+  Board board = new Board();
   
   @Override
   public void updateUI(Tile[] tiles, Player[] players) {
@@ -27,7 +28,7 @@ public class UI implements Interaction {
   
   @Override
   public void addPlayer(Player p){
-    System.out.println("dfgsdg");
+    board.addPlayer(p);
   }
   
   @Override

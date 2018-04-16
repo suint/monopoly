@@ -9,12 +9,21 @@ public class CardTile extends Tile {
   
   //when created generates random list of cards
   
-  
-  public CardTile(String name, int pos, String imgFile, Card[] cardlist) {
+  public CardTile(String name, int pos, String imgFile) {
     super(name, pos, imgFile);
-    this.cardlist = cardlist;
+    this.cardlist = makeCards();
   }
   
-  //randomly draws a card, and update the user based on the card drawn
-  public void drawCard(int x) {}
+  private Card[] makeCards(){
+    Card[] cards = new Card[10];
+    for (int i = 0; i < 10; i++){
+      cards[i] = new Card();
+    }
+    return cards;
+  }
+  
+  //randomly draws a card, and updates the user based on the card drawn
+  public void drawCard(int x) {
+  
+  }
 }

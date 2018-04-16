@@ -12,7 +12,8 @@ import javax.imageio.ImageIO;
 
 public class Tile {
   
-  private BufferedImage tileFace; //stores picture of tile... create getters/setters when
+  private BufferedImage tileFace; //stores picture of tile
+  //probably jumping the gun to put images in this version
   
   private String tileName;
   
