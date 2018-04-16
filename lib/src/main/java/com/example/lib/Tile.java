@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
  */
 
 public class Tile {
+  //http://allaboutfunandgames.com/wp-content/uploads/2012/02/Monopoly-Board.jpg
   
   private BufferedImage tileFace; //stores picture of tile
   //probably jumping the gun to put images in this version
