@@ -15,4 +15,7 @@ public interface Interaction {
   void showEnd();
   void addPlayer(Player p);
   void addTile(Tile t);
+  void initializeBoard(Board b);
+  boolean findEnd();
+  Board getBoard();
 }

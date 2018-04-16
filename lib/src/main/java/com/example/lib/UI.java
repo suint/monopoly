@@ -33,11 +33,33 @@ public class UI implements Interaction {
   
   @Override
   public void addTile(Tile t){
-    System.out.println("fgsdfg");
+    board.addTile(t);
+  }
+  
+  @Override
+  public void initializeBoard(Board b){
+    this.board = b;
+  }
+  
+  @Override
+  public boolean findEnd(){
+    boolean a = false;
+    for (int i = 0; i < board.getGamePlayers().size(); i++){
+      if (board.getPlayer(i).lose() == true){
+        a = true;
+      }
+    }
+    return a;
   }
   
   @Override
   public void showEnd() {
     System.out.println("someone won and the other ones lost");
   }
+  
+  @Override
+  public Board getBoard(){
+    return board;
+  }
+  
 }
