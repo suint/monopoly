@@ -5,9 +5,11 @@ package com.example.lib;
  */
 
 public interface Interaction {
+  //rewrites board to match current state of game
   void updateUI(Tiles[] tiles, Player[] players);
   void showIntro();
-  void getUserInput();
-  void rollDice();
+  String getUserInput();
+  int rollDice();
+  //calls the random number generator and also updates player’s current location
   void showEnd();
 }

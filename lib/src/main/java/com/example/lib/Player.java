@@ -23,7 +23,6 @@ public class Player {
     return false;
   }
   
-  //calls the random number generator and also updates player’s current location
   public void rollDice(){
     playerPos++; //would be random 1-6
   }
