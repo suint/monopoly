@@ -33,8 +33,8 @@ public class Board {
     gamePlayers.add(p);
   }
   
-  public void addTile(Tile t){
-    gameTiles[0] = t; //would add tile onto end of list of tiles... not an arraylist since num of tiles is fixed
+  public void addTile(Tile t, int x){
+    gameTiles[x] = t; //would add tile onto end of list of tiles... not an arraylist since num of tiles is fixed
   }
   
   public Player getPlayer(int j){
