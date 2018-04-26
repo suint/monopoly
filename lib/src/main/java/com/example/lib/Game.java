@@ -7,7 +7,7 @@ public class Game {
   Random random = new Random();
   Interaction gameUI;
   
-  public Game(Interaction i, Board b){
+  public Game(Interaction i){
     this.gameUI = i;
   }
   
@@ -46,7 +46,7 @@ public class Game {
   }
   
   public static void main (String[] args){
-    Game game = new Game(new UI(), new Board());
+    Game game = new Game(new UI());
     game.startGame();
   }
 }
