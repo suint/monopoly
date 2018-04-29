@@ -10,7 +10,7 @@ public class Board {
   private ArrayList<Player> gamePlayers = new ArrayList<Player>();
   
   public Board(){
-    this.gameTiles = new Tile[40]; //maybe change this number
+    this.gameTiles = new Tile[12]; //maybe change this number
   }
   
   public Tile[] getGameTiles() {
