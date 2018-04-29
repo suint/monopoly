@@ -52,9 +52,11 @@ public class PropertyTile extends Tile {
     this.propertyVal = propertyVal;
   }
   
-  public PropertyTile() {
+  public PropertyTile(String name, int pos, String imgFile, int p) {
+    super(name, pos, imgFile);
     this.numHouses = 0;
     this.ownerID = "";
-    this.propertyVal = 0;
+    this.propertyVal = p;
   }
+  
 }

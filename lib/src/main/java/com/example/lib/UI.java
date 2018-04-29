@@ -32,8 +32,8 @@ public class UI implements Interaction {
   }
   
   @Override
-  public void addTile(Tile t){
-    board.addTile(t);
+  public void addTile(Tile t, int a){
+    board.addTile(t, a);
   }
   
   @Override

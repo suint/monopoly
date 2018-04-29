@@ -14,7 +14,7 @@ public interface Interaction {
   //shows ending screen - rankings etc.
   void showEnd();
   void addPlayer(Player p);
-  void addTile(Tile t);
+  void addTile(Tile t, int a);
   void initializeBoard(Board b);
   boolean findEnd();
   Board getBoard();

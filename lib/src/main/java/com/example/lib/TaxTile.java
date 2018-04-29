@@ -14,4 +14,9 @@ public class TaxTile extends Tile {
   public void setTileValue(int tileValue) {
     this.tileValue = tileValue;
   }
+  
+  public TaxTile(String name, int pos, String imgFile, int t) {
+    super(name, pos, imgFile);
+    this.tileValue = t;
+  }
 }

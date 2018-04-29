@@ -15,15 +15,29 @@ public class Game {
     int turn = 0;
     
     gameUI.showIntro();
+    
     //game stuff here
     System.out.println("How many players?");
     int np = Integer.parseInt(gameUI.getUserInput());
     for (int i = 0; i < np; i++){
       gameUI.addPlayer(new Player(i));
     }
-    for (int i = 0; i < 40; i++){
-      gameUI.addTile(new Tile("a", i, "tile.jpg"));
-    }
+    
+            //tile adding - FIRST 11 TILES ONLY
+            //http://allaboutfunandgames.com/wp-content/uploads/2012/02/Monopoly-Board.jpg
+            gameUI.addTile(new Tile("GO", 1, "tile.jpg"), 1);
+    gameUI.addTile(new PropertyTile("Mediterranean Avenue", 2, "tile.jpg", 60), 2);
+    gameUI.addTile(new CardTile("Community Chest", 3, "tile.jpg", CardTile.CardStack.COMMUNITYCHEST), 3);
+    gameUI.addTile(new PropertyTile("Baltic Avenue", 4, "tile.jpg", 60), 4);
+    gameUI.addTile(new TaxTile("Income Tax", 5, "tile.jpg", 200), 5); //original tile is $200 or 10%
+    gameUI.addTile(new PropertyTile("Reading Railroad", 6, "tile.jpg", 200), 6);
+    gameUI.addTile(new PropertyTile("Oriental Avenue", 7, "tile.jpg", 100), 7);
+    gameUI.addTile(new CardTile("Chance", 8, "tile.jpg", CardTile.CardStack.CHANCE), 8);
+    gameUI.addTile(new PropertyTile("Vermont Avenue", 9, "tile.jpg", 100), 9);
+    gameUI.addTile(new PropertyTile("Connecticut Avenue", 10, "tile.jpg", 120), 10);
+    gameUI.addTile(new Tile("Jail", 11, "tile.jpg"), 11);
+    
+    
     
     while (!(gameUI.findEnd())){
       System.out.println("monopoly");
