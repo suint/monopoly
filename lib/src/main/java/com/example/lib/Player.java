@@ -49,7 +49,7 @@ public class Player {
   
   public Player(int userID) {
     this.userID = userID;
-    this.wallet = 500;
+    this.wallet = 80;
     this.inJail = false;
     this.playerPos = 0;
   }
@@ -65,7 +65,11 @@ public class Player {
   
   
   public void move(int i){
-    playerPos = playerPos + i; //would be random 1-6
+    int newPos = playerPos + i;
+    if (newPos > 10){
+      newPos = newPos - 11;
+    }
+    playerPos = newPos; //would be random 1-6
   }
   
   //based on player’s location; calls different methods from the corresponding tiles class; updates user

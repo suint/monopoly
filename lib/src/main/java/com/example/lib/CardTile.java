@@ -25,35 +25,35 @@ public class CardTile extends Tile {
   private String[] makeCards(){
     String[] cards = new String[14];
     if (type == CardStack.CHANCE){
-      cards[1] = "goback3";
-      cards[2] = "poortax15";
-      cards[3] = "advtogo";
-      cards[4] = "avdtoutil";
-      cards[5] = "bankpays50";
-      cards[6] = "gotoillav";
-      cards[7] = "gotostc";
-      cards[8] = "getoutofjail";
-      cards[9] = "gotojail";
-      cards[10] = "makerepairs";
-      cards[11] = "gotoboardwalk";
-      cards[12] = "chairman";
-      cards[13] = "building150";
-      cards[14] = "crossword100";
+      cards[0] = "goback3";
+      cards[1] = "poortax15";
+      cards[2] = "advtogo";
+      cards[3] = "avdtoutil";
+      cards[4] = "bankpays50";
+      cards[5] = "gotoillav";
+      cards[6] = "gotostc";
+      cards[7] = "getoutofjail";
+      cards[8] = "gotojail";
+      cards[9] = "makerepairs";
+      cards[10] = "gotoboardwalk";
+      cards[11] = "chairman";
+      cards[12] = "building150";
+      cards[13] = "crossword100";
     } else if (type == CardStack.COMMUNITYCHEST){
-      cards[1] = "advtogo";
-      cards[2] = "bankerror200";
-      cards[3] = "dr50";
-      cards[4] = "stock50";
-      cards[5] = "getoutofjail";
-      cards[6] = "gotojail";
-      cards[7] = "operacollect50";
-      cards[8] = "holiday100";
-      cards[9] = "refund20";
-      cards[10] = "bday10";
-      cards[11] = "hosp100";
-      cards[12] = "school150";
-      cards[13] = "inherit100";
-      cards[14] = "repairs40-115";
+      cards[0] = "advtogo";
+      cards[1] = "bankerror200";
+      cards[2] = "dr50";
+      cards[3] = "stock50";
+      cards[4] = "getoutofjail";
+      cards[5] = "gotojail";
+      cards[6] = "operacollect50";
+      cards[7] = "holiday100";
+      cards[8] = "refund20";
+      cards[9] = "bday10";
+      cards[10] = "hosp100";
+      cards[11] = "school150";
+      cards[12] = "inherit100";
+      cards[13] = "repairs40-115";
     }
     
     return cards;
