@@ -1,14 +1,52 @@
 package com.example.lib;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Game {
+import javax.swing.*;
+
+public class Game extends JFrame implements ActionListener{
   //https://en.wikibooks.org/wiki/Monopoly/Official_Rules
   
   Random random = new Random();
   Interaction gameUI;
+  static JTextField txtIn;
+  static JButton enter;
+  static String s;
+  
   
   public Game(Interaction i){
     this.gameUI = i;
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setBounds(100,100,300,300);
+    setTitle("Monopoly!!!!!!");
+    
+    //just testing images
+    ImageIcon img = new ImageIcon("C:\\Users\\Kelly\\AndroidStudioProjects\\Monopoly\\lib\\src\\main\\java\\com\\example\\lib\\tile.png");
+    
+    //init text field (enter number of players)
+    txtIn = new JTextField();
+    txtIn.setBounds(100,100,60,30);
+    
+    //init button
+    enter = new JButton("Enter");
+    enter.setBounds(80,150,100,40);
+    enter.addActionListener(this);
+    
+    JLabel lbl = new JLabel("blah blah blah");
+    add(txtIn);
+    add(enter);
+    JScrollPane scrollPane = new JScrollPane(lbl);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    add(scrollPane, BorderLayout.CENTER);
+    //pack();
+  }
+  
+  public void actionPerformed(ActionEvent a){
+    s = txtIn.getText();
+    add(new JButton(s));
   }
   
   public void startGame(){
@@ -56,13 +94,17 @@ public class Game {
     gameUI.showEnd();
   }
   
-  public int rollDice(){
-    int i = random.nextInt(5)+1;
+  public int rollDice() {
+    int i = random.nextInt(5) + 1;
     return i;
   }
   
   public static void main (String[] args){
-    Game game = new Game(new UI());
-    game.startGame();
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        new Game(new UI()).setVisible(true);
+      }
+    });
   }
 }

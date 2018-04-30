@@ -1,9 +1,9 @@
 package com.example.lib;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 /**
@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 public class Tile {
   //http://allaboutfunandgames.com/wp-content/uploads/2012/02/Monopoly-Board.jpg
   
-  private BufferedImage tileFace; //stores picture of tile
+  private Image tileFace; //stores picture of tile
   //probably jumping the gun to put images in this version... in fact, take this out
   
   private String tileName;
@@ -38,7 +38,7 @@ public class Tile {
     this.tilePos = tilePos;
   }
   
-  public BufferedImage getTileFace() {
+  public Image getTileFace() {
     return tileFace;
   }
   
