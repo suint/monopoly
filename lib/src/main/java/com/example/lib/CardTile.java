@@ -64,4 +64,8 @@ public class CardTile extends Tile {
     String a = cardList[x];
     return a;
   }
+  
+  public void tileAction(){
+    System.out.println("this is a card tile");
+  }
 }
