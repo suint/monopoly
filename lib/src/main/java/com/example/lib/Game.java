@@ -47,6 +47,7 @@ public class Game {
       int player = turn+1;
       gameUI.getBoard().getGamePlayers().get(turn).move(roll);
       System.out.println("player " + player + " advanced " + roll + " tiles, landing on tile " + gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos());
+      gameUI.getBoard().getGameTiles()[gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos()].tileAction();
       gameUI.getBoard().getGamePlayers().get(turn).addMoney(-20);
       System.out.println("you landed on the pay taxes tile. you lose 20 dollars. now you have " + gameUI.getBoard().getGamePlayers().get(turn).getWallet() + " dollars");
   

@@ -59,4 +59,8 @@ public class PropertyTile extends Tile {
     this.propertyVal = p;
   }
   
+  public void tileAction(){
+    System.out.println("this is a property tile!");
+  }
+  
 }

@@ -62,4 +62,8 @@ public class Tile {
     setTilePos(0);
   }
   
+  public void tileAction(){
+    System.out.println("this is a tile");
+  }
+  
 }

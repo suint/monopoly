@@ -1,7 +1,5 @@
 package com.example.lib;
 
-import javax.smartcardio.Card;
-
 /**
  * Created by Kelly on 4/16/2018.
  */

@@ -19,4 +19,8 @@ public class TaxTile extends Tile {
     super(name, pos, imgFile);
     this.tileValue = t;
   }
+  
+  public void tileAction(){
+    System.out.println("this is a tax tile!!");
+  }
 }
