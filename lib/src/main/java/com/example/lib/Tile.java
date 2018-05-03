@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * Created by Kelly on 4/15/2018.
@@ -13,7 +14,7 @@ import javax.imageio.ImageIO;
 public class Tile {
   //http://allaboutfunandgames.com/wp-content/uploads/2012/02/Monopoly-Board.jpg
   
-  private Image tileFace; //stores picture of tile
+  private ImageIcon tileFace; //stores picture of tile
   //probably jumping the gun to put images in this version... in fact, take this out
   
   private String tileName;
@@ -38,23 +39,18 @@ public class Tile {
     this.tilePos = tilePos;
   }
   
-  public Image getTileFace() {
+  public ImageIcon getTileFace() {
     return tileFace;
   }
   
-  public void setTileFace(BufferedImage img) {
+  public void setTileFace(ImageIcon img) {
     this.tileFace = tileFace;
   }
   
   protected Tile(String name, int pos, String imgFile) {
     setTileName(name);
     setTilePos(pos);
-    try{
-      BufferedImage img = ImageIO.read(new File(imgFile));
-      setTileFace(img);
-    } catch (IOException e) {
-    
-    }
+    setTileFace(new ImageIcon(imgFile));
   }
   
   protected Tile(){

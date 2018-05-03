@@ -1,29 +1,32 @@
 package com.example.lib;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-
 import javax.swing.*;
 
 public class Game extends JFrame implements ActionListener{
   //https://en.wikibooks.org/wiki/Monopoly/Official_Rules
   
-  Random random = new Random();
+  private Random random = new Random();
   Interaction gameUI;
-  static JTextField txtIn;
-  static JButton enter;
-  static String s;
+  private JTextField txtIn;
+  private JButton enter;
+  private String s;
+  private JLabel lbl;
   
   
   public Game(Interaction i){
     this.gameUI = i;
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setBounds(100,100,300,300);
-    setTitle("Monopoly!!!!!!");
+    setBounds(350,100,300,300);
+    setTitle("Monopoly!!!");
+    
+    
     
     //just testing images
-    ImageIcon img = new ImageIcon("C:\\Users\\Kelly\\AndroidStudioProjects\\Monopoly\\lib\\src\\main\\java\\com\\example\\lib\\tile.png");
+    ImageIcon img = new ImageIcon("C:\\Users\\Kelly\\AndroidStudioProjects\\Monopoly\\lib\\src\\main\\java\\com\\example\\lib\\skype_puke.png");
     
     //init text field (enter number of players)
     txtIn = new JTextField();
@@ -34,19 +37,27 @@ public class Game extends JFrame implements ActionListener{
     enter.setBounds(80,150,100,40);
     enter.addActionListener(this);
     
-    JLabel lbl = new JLabel("blah blah blah");
-    add(txtIn);
-    add(enter);
+    lbl = new JLabel(img);
+    
+    JPanel a = new JPanel();
+    a.add(lbl);
+    
+    add(a);
+    
+    /*
     JScrollPane scrollPane = new JScrollPane(lbl);
+    scrollPane.add(txtIn);
+    scrollPane.add(enter);
     scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    add(scrollPane, BorderLayout.CENTER);
+    add(scrollPane, BorderLayout.CENTER);*/
     //pack();
+    
   }
   
   public void actionPerformed(ActionEvent a){
     s = txtIn.getText();
-    add(new JButton(s));
+    lbl.setText(s);
   }
   
   public void startGame(){
