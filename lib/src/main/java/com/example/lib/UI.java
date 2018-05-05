@@ -26,7 +26,8 @@ public class UI implements Interaction{
   
   @Override
   public String getUserInput() {
-    return sc.next();
+    String s = sc.next()+sc.nextLine();
+    return s;
   }
   
   @Override

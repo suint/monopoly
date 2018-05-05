@@ -20,6 +20,10 @@ public class CardTile extends Tile {
     this.cardList = makeCards();
   }
   
+  public CardTile(){
+  
+  }
+  
   private String[] makeCards(){
     String[] cards = new String[14];
     if (type == CardStack.CHANCE){
@@ -64,6 +68,10 @@ public class CardTile extends Tile {
   }
   
   public void tileAction(){
-    System.out.println("this is a card tile");
+    if (this.type == CardStack.COMMUNITYCHEST){
+      System.out.println("You have landed on a community chest tile. You draw one card from the community chest.");
+    } else {
+      System.out.println("You have landed on a chance tile. You draw a chance card.");
+    }
   }
 }

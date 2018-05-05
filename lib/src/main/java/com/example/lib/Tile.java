@@ -1,10 +1,10 @@
 package com.example.lib;
-
+/*
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
+import javax.imageio.ImageIO;*/
 import javax.swing.ImageIcon;
 
 /**
@@ -58,8 +58,10 @@ public class Tile {
     setTilePos(0);
   }
   
-  public void tileAction(){
+  public String tileAction(Interaction i){
     System.out.println("this is a tile");
+    String s = i.getUserInput();
+    return s;
   }
   
 }

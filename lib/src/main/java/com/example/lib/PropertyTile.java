@@ -60,7 +60,7 @@ public class PropertyTile extends Tile {
   }
   
   public void tileAction(){
-    System.out.println("this is a property tile!");
+    System.out.println("You have landed on a property tile. Would you like to purchase this property?");
   }
   
 }

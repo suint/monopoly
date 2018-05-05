@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Board {
   private Tile[] gameTiles;
-  private ArrayList<Player> gamePlayers = new ArrayList<Player>();
+  private ArrayList<Player> gamePlayers = new ArrayList<>();
   
   public Board(){
     this.gameTiles = new Tile[12]; //maybe change this number

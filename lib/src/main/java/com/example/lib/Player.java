@@ -10,6 +10,7 @@ public class Player {
   public int wallet;
   public boolean inJail;
   public int playerPos;
+  public boolean jailCard; //whether user has get out of jail free card
   
   public int getUserID() {
     return userID;
@@ -39,6 +40,12 @@ public class Player {
     this.inJail = inJail;
   }
   
+  public void addJailCard() {this.jailCard = true;}
+  
+  public void useJailCard() {this.jailCard = false;}
+  
+  public boolean hasJailCard() {return this.jailCard;}
+  
   public int getPlayerPos() {
     return playerPos;
   }
@@ -52,6 +59,7 @@ public class Player {
     this.wallet = 80;
     this.inJail = false;
     this.playerPos = 0;
+    this.jailCard = false;
   }
   
   //checks whether the loser has lost yet; aka whether wallet==0;
@@ -70,11 +78,6 @@ public class Player {
       newPos = newPos - 11;
     }
     playerPos = newPos; //would be random 1-6
-  }
-  
-  //based on player’s location; calls different methods from the corresponding tiles class; updates user
-  public void takeActions(Player p){
-    this.wallet = wallet + 22;
   }
   
 }
