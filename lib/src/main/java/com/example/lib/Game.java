@@ -1,5 +1,7 @@
 package com.example.lib;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,61 +15,60 @@ public class Game extends JFrame implements ActionListener{
   Interaction gameUI;
   private JTextField txtIn;
   private JButton enter;
-  private String s;
-  private JLabel lbl;
-  
-  
+  private static String s;
+  private JLabel lb5, board;
+  GridBagConstraints layoutConst = null;
+  JTextField textResult;
+
+
   public Game(Interaction i){
     this.gameUI = i;
+    setSize(400, 400);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setBounds(350,100,300,300);
     setTitle("Monopoly!!!");
-    
-    
-    
+
+    JPanel thePanel = new JPanel();
+
+
+
+    textResult = new JTextField("0",20);
+
+    Font font = new Font("Helvetica", Font.PLAIN, 18);
+
+    textResult.setFont(font);
+
+
     //just testing images
-    ImageIcon img = new ImageIcon("C:\\Users\\Kelly\\AndroidStudioProjects\\Monopoly\\lib\\src\\main\\java\\com\\example\\lib\\skype_puke.png");
-    
-    //init text field (enter number of players)
-    txtIn = new JTextField();
-    txtIn.setBounds(100,100,60,30);
-    
+    String img = "C:\\Users\\Betty\\AndroidStudioProjects\\Monopoly\\lib\\src\\main\\java\\com\\example\\lib\\Capture.PNG";
+    board = new JLabel(new ImageIcon(img));
+    board.setMinimumSize(new Dimension(400, 300));
+    thePanel.add(board);
+
     //init button
     enter = new JButton("Enter");
-    enter.setBounds(80,150,100,40);
+   // enter.setBounds(80,150,100,40);
     enter.addActionListener(this);
-    
-    lbl = new JLabel(img);
-    
-    JPanel a = new JPanel();
-    a.add(lbl);
-    
-    add(a);
-    
-    /*
-    JScrollPane scrollPane = new JScrollPane(lbl);
-    scrollPane.add(txtIn);
-    scrollPane.add(enter);
-    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    add(scrollPane, BorderLayout.CENTER);*/
-    //pack();
-    
+
+    lb5 = new JLabel("Enter the Number of Players:");
+
+
+    add(thePanel);
   }
   
   public void actionPerformed(ActionEvent a){
-    s = txtIn.getText();
-    lbl.setText(s);
+    s = textResult.getText();
+    //lbl.setText(s);
+    //startGame(Integer.parseInt(s));
   }
   
   public void startGame(){
     int turn = 0;
     
     gameUI.showIntro();
-    
+    int np = 2;
     //game stuff here
-    System.out.println("How many players?");
-    int np = Integer.parseInt(gameUI.getUserInput());
+   // System.out.println("How many players?");
+   // int np = Integer.parseInt(gameUI.getUserInput());
     for (int i = 0; i < np; i++){
       gameUI.addPlayer(new Player(i));
     }
@@ -89,7 +90,7 @@ public class Game extends JFrame implements ActionListener{
     while (!(gameUI.findEnd())){
       if (turn >= gameUI.getBoard().getGamePlayers().size()){
         turn = 0;
-      }
+    }
       System.out.println("player " + turn + "'s turn ");
       System.out.println("dice rolling...");
       int roll = rollDice();
@@ -111,11 +112,14 @@ public class Game extends JFrame implements ActionListener{
   }
   
   public static void main (String[] args){
-    SwingUtilities.invokeLater(new Runnable() {
+    Game game = new Game(new UI());
+    game.startGame();
+  }
+    /*SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
         new Game(new UI()).setVisible(true);
       }
     });
-  }
+  }*/
 }

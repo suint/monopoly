@@ -44,13 +44,14 @@ public class Tile {
   }
   
   public void setTileFace(ImageIcon img) {
-    this.tileFace = tileFace;
+    this.tileFace = img;
   }
   
   protected Tile(String name, int pos, String imgFile) {
     setTileName(name);
     setTilePos(pos);
     setTileFace(new ImageIcon(imgFile));
+    //System.out.println(getTileFace());
   }
   
   protected Tile(){
