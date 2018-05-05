@@ -1,59 +1,91 @@
 package com.example.lib;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.*;
 
-public class Game extends JFrame implements ActionListener{
+public class Game extends JFrame implements ActionListener {
   //https://en.wikibooks.org/wiki/Monopoly/Official_Rules
   
   private Random random = new Random();
-  private Interaction gameUI;
+  Interaction gameUI;
   private JTextField txtIn;
   private JButton enter;
-  private String s;
+  private static String s;
+  private JLabel lb5, board;
+  GridBagConstraints layoutConst = null;
+  JTextField textResult;
   
-  public Interaction getGameUI(){
-    return gameUI;
-  }
   
-  public Game(Interaction i){
+  public Game(Interaction i) {
+    this.gameUI = i;
+    setSize(400, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setTitle("Monopoly!!!");
     
+    JPanel thePanel = new JPanel();
+  
+  
+    textResult = new JTextField("0", 20);
+    
+    Font font = new Font("Helvetica", Font.PLAIN, 18);
+    
+    textResult.setFont(font);
+    
+    
+    //just testing images
+    String img = "C:\\Users\\Betty\\AndroidStudioProjects\\Monopoly\\lib\\src\\main\\java\\com\\example\\lib\\Capture.PNG";
+    board = new JLabel(new ImageIcon(img));
+    board.setMinimumSize(new Dimension(400, 300));
+    thePanel.add(board);
+    
+    //init button
+    enter = new JButton("Enter");
+    // enter.setBounds(80,150,100,40);
+    enter.addActionListener(this);
+    
+    lb5 = new JLabel("Enter the Number of Players:");
+    
+    
+    add(thePanel);
   }
   
-  public void actionPerformed(ActionEvent a){
-    //s = txtIn.getText();
+  public void actionPerformed(ActionEvent a) {
+    s = textResult.getText();
     //lbl.setText(s);
+    //startGame(Integer.parseInt(s));
   }
   
-  public void startGame(){
+  public void startGame() {
     int turn = 0;
     
     gameUI.showIntro();
-    
+    int np = 2;
     //game stuff here
-    System.out.println("How many players?");
-    int np = Integer.parseInt(gameUI.getUserInput());
-    for (int i = 0; i < np; i++){
+    // System.out.println("How many players?");
+    // int np = Integer.parseInt(gameUI.getUserInput());
+    for (int i = 0; i < np; i++) {
       gameUI.addPlayer(new Player(i));
     }
     
     initTiles();
     
-    while (!(gameUI.findEnd())){
-      if (turn >= gameUI.getBoard().getGamePlayers().size()){
+    while (!(gameUI.findEnd())) {
+      if (turn >= gameUI.getBoard().getGamePlayers().size()) {
         turn = 0;
       }
       System.out.println("player " + turn + "'s turn ");
       System.out.println("dice rolling...");
       int roll = random.nextInt(5) + 1;
-      int player = turn+1;
+      int player = turn + 1;
       gameUI.getBoard().getGamePlayers().get(turn).move(roll);
       System.out.println("player " + player + " advanced " + roll + " tiles, landing on tile " + gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos());
       String in = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos()].tileAction(gameUI);
-      if
+      
       /*
       if (gameUI.getBoard().getGameTiles()[gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos()].getClass().equals(new CardTile())){
       
@@ -65,7 +97,7 @@ public class Game extends JFrame implements ActionListener{
   }
   //public LayoutManager initLayout(){}
   
-  public void initTiles(){
+  public void initTiles() {
     //tile adding - FIRST 11 TILES ONLY
     //http://allaboutfunandgames.com/wp-content/uploads/2012/02/Monopoly-Board.jpg
     gameUI.addTile(new Tile("GO", 0, "tile.jpg"), 0);
@@ -82,12 +114,12 @@ public class Game extends JFrame implements ActionListener{
     
   }
   
-  public String useCard(String s, int player){
+  public String useCard(String s, int player) {
     //display string in textbox
     String flavorText = "The card reads:";
-    switch(s){
+    switch (s) {
       case "goback3":
-        if (gameUI.getBoard().getGamePlayers().get(player).getPlayerPos() >= 3){
+        if (gameUI.getBoard().getGamePlayers().get(player).getPlayerPos() >= 3) {
           gameUI.getBoard().getGamePlayers().get(player).move(-3);
         } else {
           gameUI.getBoard().getGamePlayers().get(player).setPlayerPos(0);
@@ -117,14 +149,14 @@ public class Game extends JFrame implements ActionListener{
         gameUI.getBoard().getGamePlayers().get(player).setPlayerPos(0);
         flavorText = flavorText + "\nAdvance to St. Charles Place – If you pass Go, collect $200";
       case "getoutofjail":
-        if (gameUI.getBoard().getGamePlayers().get(player).inJail){
+        if (gameUI.getBoard().getGamePlayers().get(player).inJail) {
           gameUI.getBoard().getGamePlayers().get(player).setInJail(false);
         } else {
           gameUI.getBoard().getGamePlayers().get(player).addJailCard();
         }
         flavorText = flavorText + "\nGet Out of Jail Free";
       case "gotojail":
-        if (gameUI.getBoard().getGamePlayers().get(player).hasJailCard()){
+        if (gameUI.getBoard().getGamePlayers().get(player).hasJailCard()) {
           gameUI.getBoard().getGamePlayers().get(player).useJailCard();
           //different flavor text for here
         } else {
@@ -143,7 +175,7 @@ public class Game extends JFrame implements ActionListener{
       case "chairman":
         //pay 50 to each other player
         gameUI.getBoard().getGamePlayers().get(player).addMoney(gameUI.getBoard().getGamePlayers().size() * -50);
-        for (int i = 0; i < gameUI.getBoard().getGamePlayers().size(); i++){
+        for (int i = 0; i < gameUI.getBoard().getGamePlayers().size(); i++) {
           if (!(i == player))
             gameUI.getBoard().getGamePlayers().get(i).addMoney(50);
         }
@@ -166,7 +198,7 @@ public class Game extends JFrame implements ActionListener{
       case "operacollect50":
         //collect 50 from each other player
         gameUI.getBoard().getGamePlayers().get(player).addMoney(gameUI.getBoard().getGamePlayers().size() * 50);
-        for (int i = 0; i < gameUI.getBoard().getGamePlayers().size(); i++){
+        for (int i = 0; i < gameUI.getBoard().getGamePlayers().size(); i++) {
           if (!(i == player))
             gameUI.getBoard().getGamePlayers().get(i).addMoney(-50);
         }
@@ -198,15 +230,8 @@ public class Game extends JFrame implements ActionListener{
     return flavorText;
   }
   
-  public static void main (String[] args){
+  public static void main(String[] args) {
     Game game = new Game(new UI());
     game.startGame();
-    /*
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        new Game(new UI()).setVisible(true);
-      }
-    });*/
   }
 }
