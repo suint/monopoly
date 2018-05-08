@@ -56,7 +56,7 @@ public class Player {
   
   public Player(int userID) {
     this.userID = userID;
-    this.wallet = 80;
+    this.wallet = 100;
     this.inJail = false;
     this.playerPos = 0;
     this.jailCard = false;

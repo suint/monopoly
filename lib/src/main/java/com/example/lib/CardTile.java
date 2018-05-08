@@ -1,5 +1,7 @@
 package com.example.lib;
 
+import java.util.Random;
+
 /**
  * Created by Kelly on 4/16/2018.
  */
@@ -14,14 +16,10 @@ public class CardTile extends Tile {
   
   //when created generates random list of cards
   
-  public CardTile(String name, int pos, String imgFile, CardStack c) {
-    super(name, pos, imgFile);
+  public CardTile(String name, int posx, int posy, CardStack c, int v) {
+    super(name, posx, posy, v);
     this.type = c;
     this.cardList = makeCards();
-  }
-  
-  public CardTile(){
-  
   }
   
   private String[] makeCards(){
@@ -60,18 +58,15 @@ public class CardTile extends Tile {
     
     return cards;
   }
-  
-  //randomly draws a card, and updates the user based on the card drawn
-  public String drawCard(int x) {
-    String a = cardList[x];
-    return a;
-  }
-  
-  public void tileAction(){
+
+  public String tileAction(Interaction i, int player){
     if (this.type == CardStack.COMMUNITYCHEST){
       System.out.println("You have landed on a community chest tile. You draw one card from the community chest.");
     } else {
       System.out.println("You have landed on a chance tile. You draw a chance card.");
     }
+    
+    int roll = new Random().nextInt(22) + 1;
+    return cardList[roll];
   }
 }

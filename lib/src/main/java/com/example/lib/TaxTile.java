@@ -15,12 +15,12 @@ public class TaxTile extends Tile {
     this.tileValue = tileValue;
   }
   
-  public TaxTile(String name, int pos, String imgFile, int t) {
-    super(name, pos, imgFile);
-    this.tileValue = t;
+  public TaxTile(String name, int posx, int posy, int t) {
+    super(name, posx, posy, t);
   }
   
-  public void tileAction(){
-    System.out.println("this is a tax tile!!");
+  public String tileAction(Interaction i, int player){
+   return super.tileAction(i, player);
+
   }
 }

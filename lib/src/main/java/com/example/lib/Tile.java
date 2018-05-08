@@ -14,12 +14,11 @@ import javax.swing.ImageIcon;
 public class Tile {
   //http://allaboutfunandgames.com/wp-content/uploads/2012/02/Monopoly-Board.jpg
   
-  private ImageIcon tileFace; //stores picture of tile
-  //probably jumping the gun to put images in this version... in fact, take this out
-  
   private String tileName;
   
-  private int tilePos;
+  private int tilePosx;
+  private int tilePosy;
+  private int tileValue;
   //tile position is just one number since the tiles are just consecutive
   
   
@@ -31,37 +30,47 @@ public class Tile {
     this.tileName = tileName;
   }
   
-  public int getTilePos() {
-    return tilePos;
+  public int getTilePosx() {
+    return tilePosx;
+  }
+
+  public int getTilePosy() {
+    return tilePosy;
+  }
+
+  public int getTileValue() {
+    return tileValue;
+  }
+
+  public void setTileValue(int tileValue) {
+    this.tileValue = tileValue;
   }
   
-  public void setTilePos(int tilePos) {
-    this.tilePos = tilePos;
+  public void setTilePos(int tilePosx, int tilePosy, int v) {
+    this.tilePosx = tilePosx;
+    this.tilePosy = tilePosy;
+    this.tileValue = v;
   }
   
-  public ImageIcon getTileFace() {
-    return tileFace;
-  }
-  
-  public void setTileFace(ImageIcon img) {
-    this.tileFace = img;
-  }
-  
-  protected Tile(String name, int pos, String imgFile) {
-    setTileName(name);
-    setTilePos(pos);
-    setTileFace(new ImageIcon(imgFile));
+  protected Tile(String name, int posx, int posy, int v) {
+    this.tileName = name;
+    this.tilePosx = posx;
+    this.tilePosy = posy;
+    this.tileValue = v;
+
     //System.out.println(getTileFace());
   }
   
   protected Tile(){
     setTileName("null");
-    setTilePos(0);
+    setTilePos(0, 0, 0);
   }
-  
-  public String tileAction(Interaction i){
-    System.out.println("this is a tile");
-    String s = i.getUserInput();
+
+  public String tileAction(Interaction i, int player){
+    System.out.println("You have landed on " + tileName + ".");
+    int price = this.tileValue;
+    i.getBoard().getGamePlayers().get(player).addMoney(price);
+    String s = "tile";
     return s;
   }
   

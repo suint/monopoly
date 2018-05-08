@@ -1,8 +1,7 @@
+
 package com.example.lib;
 
 import java.util.Scanner;
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by Kelly on 4/16/2018.
