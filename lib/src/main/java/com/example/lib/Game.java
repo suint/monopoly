@@ -1,11 +1,13 @@
 package com.example.lib;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Game extends JFrame implements ActionListener {
@@ -16,42 +18,49 @@ public class Game extends JFrame implements ActionListener {
   private JTextField txtIn;
   private JButton enter;
   private static String s;
-  private JLabel lb5, board;
-  GridBagConstraints layoutConst = null;
   JTextField textResult;
   private int player = 0;
   
   public Game(Interaction i) {
     this.gameUI = i;
-    setSize(400, 400);
+    setSize(666, 750);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setTitle("Monopoly!!!");
     
     JPanel thePanel = new JPanel();
-  
-  
     textResult = new JTextField("0", 20);
     
     Font font = new Font("Helvetica", Font.PLAIN, 18);
     
     textResult.setFont(font);
     
+    JPanel board;
     
     //just testing images
-    String img = "C:\\Users\\Kelly\\AndroidStudioProjects\\Monopoly\\lib\\src\\main\\java\\com\\example\\lib\\monopoly.png";
-    board = new JLabel(new ImageIcon(img));
-    board.setMinimumSize(new Dimension(400, 300));
-    thePanel.add(board);
+    String imgPath = new File("").getAbsolutePath();
+    imgPath = imgPath + "\\lib\\src\\main\\java\\com\\example\\lib\\monopoly.png";
+    try {
+      final BufferedImage image = ImageIO.read(new File(imgPath));
+      board = new JPanel(){
+        @Override
+        protected void paintComponent(Graphics g) {
+          super.paintComponent(g);
+          g.drawImage(image, 0, 0, null);
+        }
+      };
+      board.setSize(new Dimension(900, 300));
+      add(board);
+    } catch (IOException e){
+      System.out.println(e.getMessage());
+    }
     
     //init button
     enter = new JButton("Enter");
     // enter.setBounds(80,150,100,40);
     enter.addActionListener(this);
     
-    lb5 = new JLabel("Enter the Number of Players:");
+    JLabel lb = new JLabel("Enter the Number of Players:");
     
-    
-    add(thePanel);
   }
   
   public void actionPerformed(ActionEvent a) {
@@ -85,10 +94,18 @@ public class Game extends JFrame implements ActionListener {
       gameUI.getBoard().getGamePlayers().get(turn).move(roll);
       System.out.println("player " + player + " advanced " + roll + " tiles, landing on tile " + gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos());
       String in = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos()].tileAction(gameUI, turn);
-      if (!(in == "tile")){
-        if (in == "yes" || in == "no"){
+      if (!(in.equals("tile"))){
+        if (in.equals("yes")){
+          System.out.println("You now own:");
+          //System.out.println(gameUI.getBoard().getGameTiles()[gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos()].getTileName().split("#")[0]);
           
-        } else {
+          for (int i = 0; i < gameUI.getBoard().getGameTiles().length; i++){ //find if each tile is owned by current player. check if property tile & if tagged as owned by current player
+            if ((gameUI.getBoard().getGameTiles()[i].getClass().equals(new PropertyTile())) &&
+                    (Integer.parseInt(gameUI.getBoard().getGameTiles()[i].getTileName().split("#")[1]) == 0)){
+              System.out.println(gameUI.getBoard().getGameTiles()[i].getTileName());
+            }
+          }
+        } else if (!(in.equals("no"))){
           System.out.println(useCard(in, turn));
         }
       }
@@ -117,6 +134,7 @@ public class Game extends JFrame implements ActionListener {
     gameUI.addTile(new PropertyTile("Vermont Avenue", 8, 0,-1, -1,  100), 8);
     gameUI.addTile(new PropertyTile("Connecticut Avenue", 9, 0, -1, -1,  120), 9);
     gameUI.addTile(new Tile("Jail", 10, 0, 0), 10);
+    //gameUI.addTile(new PropertyTile("St. Charles Place", ), 0);
 
   }
   
@@ -262,7 +280,13 @@ public class Game extends JFrame implements ActionListener {
   }
   
   public static void main(String[] args) {
-    Game game = new Game(new UI());
-    game.startGame();
+    //Game game = new Game(new UI());
+    //game.startGame();
+    SwingUtilities.invokeLater(new Runnable() {
+        @Override
+      public void run() {
+                new Game(new UI()).setVisible(true);
+              }
+    });
   }
 }

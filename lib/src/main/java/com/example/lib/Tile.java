@@ -20,8 +20,16 @@ public class Tile {
   private int tilePosy;
   private int tileValue;
   //tile position is just one number since the tiles are just consecutive
+  private int ownerID;
+  private boolean ownable;
   
+  public int getOwnerID() {
+    return ownerID;
+  }
   
+  public void setOwnerID(int ownerID) {
+    this.ownerID = ownerID;
+  }
   public String getTileName() {
     return tileName;
   }
@@ -46,6 +54,10 @@ public class Tile {
     this.tileValue = tileValue;
   }
   
+  public void setOwnable(boolean o){this.ownable = o;}
+  
+  public boolean getOwnable(){return ownable;}
+  
   public void setTilePos(int tilePosx, int tilePosy, int v) {
     this.tilePosx = tilePosx;
     this.tilePosy = tilePosy;
@@ -57,13 +69,16 @@ public class Tile {
     this.tilePosx = posx;
     this.tilePosy = posy;
     this.tileValue = v;
+    this.ownable = false;
+    this.ownerID = 0;
 
     //System.out.println(getTileFace());
   }
   
   protected Tile(){
-    setTileName("null");
+    this.tileName = "null";
     setTilePos(0, 0, 0);
+    this.ownerID = 0;
   }
 
   public String tileAction(Interaction i, int player){

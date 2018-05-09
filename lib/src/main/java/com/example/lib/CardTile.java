@@ -66,7 +66,7 @@ public class CardTile extends Tile {
       System.out.println("You have landed on a chance tile. You draw a chance card.");
     }
     
-    int roll = new Random().nextInt(22) + 1;
+    int roll = new Random().nextInt(14) ;
     return cardList[roll];
   }
 }
