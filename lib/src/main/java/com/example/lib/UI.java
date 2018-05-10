@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class UI implements Interaction{
   
-  Scanner sc = new Scanner(System.in);
-  Board board = new Board();
+  Scanner sc  = new Scanner(System.in);
+  private Board board = new Board();
   
   @Override
   public void updateUI(Tile[] tiles, Player[] players) {

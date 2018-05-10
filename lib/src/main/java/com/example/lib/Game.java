@@ -1,85 +1,26 @@
 package com.example.lib;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Game extends JFrame implements ActionListener {
-  //https://en.wikibooks.org/wiki/Monopoly/Official_Rules
+public class Game{
   
+  private Interaction gameUI = new UI();
   private Random random = new Random();
-  Interaction gameUI;
-  private JTextField txtIn;
-  private JButton enter;
-  private static String s;
-  JTextField textResult;
-  private int player = 0;
+  private int player;
+  private int turn;
   
-  public Game(Interaction i) {
-    this.gameUI = i;
-    setSize(666, 750);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setTitle("Monopoly!!!");
-    
-    JPanel thePanel = new JPanel();
-    textResult = new JTextField("0", 20);
-    
-    Font font = new Font("Helvetica", Font.PLAIN, 18);
-    
-    textResult.setFont(font);
-    
-    JPanel board;
-    
-    //just testing images
-    String imgPath = new File("").getAbsolutePath();
-    imgPath = imgPath + "\\lib\\src\\main\\java\\com\\example\\lib\\monopoly.png";
-    try {
-      final BufferedImage image = ImageIO.read(new File(imgPath));
-      board = new JPanel(){
-        @Override
-        protected void paintComponent(Graphics g) {
-          super.paintComponent(g);
-          g.drawImage(image, 0, 0, null);
-        }
-      };
-      board.setSize(new Dimension(900, 300));
-      add(board);
-    } catch (IOException e){
-      System.out.println(e.getMessage());
-    }
-    
-    //init button
-    enter = new JButton("Enter");
-    // enter.setBounds(80,150,100,40);
-    enter.addActionListener(this);
-    
-    JLabel lb = new JLabel("Enter the Number of Players:");
-    
-  }
-  
-  public void actionPerformed(ActionEvent a) {
-    s = textResult.getText();
-    //lbl.setText(s);
-    //startGame(Integer.parseInt(s));
+  public void startGame2(){
+    turn = 0;
+    gameUI.addPlayer(new Player(1));
+    gameUI.addPlayer(new Player(2));
+    System.out.println("game inits");
+    initTiles();
   }
   
   public void startGame() {
-    int turn = 0;
     
     gameUI.showIntro();
-    int np = 2;
-    //game stuff here
-    // System.out.println("How many players?");
-    // int np = Integer.parseInt(gameUI.getUserInput());
-    for (int i = 0; i < np; i++) {
-      gameUI.addPlayer(new Player(i));
-    }
+    
     
     initTiles();
     
@@ -118,7 +59,6 @@ public class Game extends JFrame implements ActionListener {
     }
     gameUI.showEnd();
   }
-  //public LayoutManager initLayout(){}
   
   public void initTiles() {
     //tile adding - FIRST 11 TILES ONLY
@@ -136,6 +76,20 @@ public class Game extends JFrame implements ActionListener {
     gameUI.addTile(new Tile("Jail", 10, 0, 0), 10);
     //gameUI.addTile(new PropertyTile("St. Charles Place", ), 0);
 
+  }
+  
+  //advances turn
+  public void nextTurn(){
+    turn++;
+    player = (turn%2) + 1;
+    int roll = random.nextInt(5) + 1;
+    System.out.println(gameUI.getBoard().getGamePlayers().size());
+  }
+  
+  //returns information about current player
+  public String getInfo(){
+    String s = "Currently player " + player + " on the tile " + gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(player).getPlayerPos()].getTileName();
+    return s;
   }
   
   public String useCard(String s, int player) {
@@ -279,14 +233,4 @@ public class Game extends JFrame implements ActionListener {
     return flavorText;
   }
   
-  public static void main(String[] args) {
-    //Game game = new Game(new UI());
-    //game.startGame();
-    SwingUtilities.invokeLater(new Runnable() {
-        @Override
-      public void run() {
-                new Game(new UI()).setVisible(true);
-              }
-    });
-  }
 }
