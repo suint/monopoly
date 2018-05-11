@@ -3,7 +3,6 @@ import java.util.Random;
 import javax.swing.*;
 
 public class Game{
-  
   private Interaction gameUI = new UI();
   private Random random = new Random();
   private int player;
@@ -74,7 +73,7 @@ public class Game{
     gameUI.addTile(new PropertyTile("Vermont Avenue", 8, 0,-1, -1,  100), 8);
     gameUI.addTile(new PropertyTile("Connecticut Avenue", 9, 0, -1, -1,  120), 9);
     gameUI.addTile(new Tile("Jail", 10, 0, 0), 10);
-    //gameUI.addTile(new PropertyTile("St. Charles Place", ), 0);
+    //gameUI.addTile(new PropertyTile("St. Charles Place"), 0);
 
   }
   
@@ -83,7 +82,7 @@ public class Game{
     turn++;
     player = (turn%2) + 1;
     int roll = random.nextInt(5) + 1;
-    System.out.println(gameUI.getBoard().getGamePlayers().size());
+    gameUI.getBoard().getPlayer(player).move(roll);
   }
   
   //returns information about current player

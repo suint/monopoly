@@ -2,6 +2,7 @@ package com.example.lib;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +19,7 @@ class Window extends JFrame implements ActionListener {
   //https://en.wikibooks.org/wiki/Monopoly/Official_Rules
   
   private JTextField txtIn;
+  private JPanel board;
   private JButton enter;
   private static String s;
   private JLabel dialog;
@@ -48,8 +50,6 @@ class Window extends JFrame implements ActionListener {
     c.gridy = 0;
     inPanel.add(enter);
     
-    JPanel board;
-    
     //import board image
     String imgPath = new File("").getAbsolutePath();
     imgPath = imgPath + "\\lib\\src\\main\\java\\com\\example\\lib\\monopoly.png";
@@ -59,10 +59,10 @@ class Window extends JFrame implements ActionListener {
         @Override
         protected void paintComponent(Graphics g) {
           super.paintComponent(g);
-          g.drawImage(image, 0, 0, null);
+          g.drawImage(drawBoard(image), 0, 0, null);
         }
       };
-      board.setMinimumSize(new Dimension(666, 750));
+      board.setMinimumSize(new  Dimension(666, 750));
       c.gridx = 0;
       c.gridy = 1;
       add(board);
@@ -71,6 +71,8 @@ class Window extends JFrame implements ActionListener {
     }
     
     dialog = new JLabel("instructions here");
+    c.fill = c.HORIZONTAL;
+    c.weightx = 2;
     c.gridx = 0;
     c.gridy = 2;
     add(dialog, BorderLayout.EAST);
@@ -79,6 +81,15 @@ class Window extends JFrame implements ActionListener {
     c.gridx = 0;
     c.gridy = 3;
     add(inPanel, BorderLayout.SOUTH);
+  }
+  
+  //use to draw player units later
+  protected BufferedImage drawBoard(BufferedImage img){
+    Graphics2D g2d = img.createGraphics();
+    g2d.setColor(Color.RED);
+    g2d.fill(new Ellipse2D.Float(0, 0, 200, 100));
+    g2d.dispose();
+    return img;
   }
   
   public void actionPerformed(ActionEvent a) {
