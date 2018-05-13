@@ -22,6 +22,10 @@ public class CardTile extends Tile {
     this.cardList = makeCards();
   }
   
+  public CardTile(){
+    super("a", 0,0,1);
+  }
+  
   private String[] makeCards(){
     String[] cards = new String[14];
     if (type == CardStack.CHANCE){
@@ -59,14 +63,14 @@ public class CardTile extends Tile {
     return cards;
   }
 
-  public String tileAction(Interaction i, int player){
-    if (this.type == CardStack.COMMUNITYCHEST){
-      System.out.println("You have landed on a community chest tile. You draw one card from the community chest.");
-    } else {
-      System.out.println("You have landed on a chance tile. You draw a chance card.");
-    }
-    
+  public String tileAction(Interaction i, int player) {
     int roll = new Random().nextInt(14) ;
-    return cardList[roll];
+    String s = cardList[roll];
+    if (this.type == CardStack.CHANCE) {
+      s += "#C";
+    } else if (this.type == CardStack.COMMUNITYCHEST) {
+      s +="#CC";
+    }
+    return s;
   }
 }

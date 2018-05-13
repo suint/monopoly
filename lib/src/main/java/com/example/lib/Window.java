@@ -23,6 +23,7 @@ class Window extends JFrame implements ActionListener {
   //https://en.wikibooks.org/wiki/Monopoly/Official_Rules
   
   private JTextField txtIn;
+  private JScrollPane dialogContainer;
   private JLabel dialog;
   private static String s;
   private Game myGame;
@@ -84,26 +85,30 @@ class Window extends JFrame implements ActionListener {
       c.weighty=9.5;
 
       this.add(board, c);
-    
-
-
 
     //Label
-
-    dialog = new JLabel("Instructions here");
-    dialog.setBorder(BorderFactory.createLineBorder(Color.black));
+  
+    dialog = new JLabel("Welcome to Monopoly. Type answers below. Scroll if text cuts off. Type \"help\" to see extra commands.");
+    dialogContainer = new JScrollPane(dialog);
+    dialogContainer.getVerticalScrollBar().setPreferredSize (new Dimension(0,0));
+    dialogContainer.getHorizontalScrollBar().setPreferredSize (new Dimension(0,0));
+    dialogContainer.getVerticalScrollBar().setMinimumSize(new Dimension(0, 0));
+    dialogContainer.getVerticalScrollBar().setMinimumSize(new Dimension(0, 0));
+    dialogContainer.getVerticalScrollBar().setMaximumSize(new Dimension(0, 0));
+    dialogContainer.getVerticalScrollBar().setMaximumSize(new Dimension(0, 0));
+    dialogContainer.setBorder(BorderFactory.createLineBorder(Color.black));
 
     c.gridx=0;
     c.gridy=1;
     c.weightx=1;
     c.weighty=.025;
 
-    this.add(dialog,c);
+    this.add(dialogContainer,c);
 
     //Text
 
     txtIn=new JTextField();
-    txtIn.setText("text in");
+    txtIn.setText("Type commands here.");
     JScrollPane pane=new JScrollPane(txtIn);
 
     c.gridx=0;
