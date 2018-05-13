@@ -1,4 +1,6 @@
 package com.example.lib;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.Random;
 import javax.swing.*;
 
@@ -83,6 +85,10 @@ public class Game{
     player = (turn%2) + 1;
     int roll = random.nextInt(5) + 1;
     gameUI.getBoard().getPlayer(player).move(roll);
+  }
+  
+  public int getTurn(){
+    return turn;
   }
   
   //returns information about current player
