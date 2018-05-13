@@ -146,42 +146,19 @@ class Window extends JFrame implements ActionListener {
     myGame.initTiles();
     Graphics2D g2d = img.createGraphics();
     
+    //player one
     g2d.setColor(Color.RED);
-    g2d.fill(new Ellipse2D.Float(620, 620, 40, 40));
+    int posx1 = myGame.Posx(1);
+    int posy1 = myGame.Posy(1);
+    g2d.fill(new Rectangle(posx1, posy1, 20, 20));
     
-    /*g2d.setColor(Color.WHITE);
-    Rectangle info = new Rectangle(200,175, 100,50);
-    g2d.fill(info);
-    */
-    g2d.setColor(Color.BLACK);
-    Font font1 = new Font("Sans Serif", Font.PLAIN, 20);
-    g2d.setFont(font1);
-    String tempString = "Turn: " + myGame.getTurn();
-    FontRenderContext frc = g2d.getFontRenderContext();
-    g2d.drawString(tempString, 200, 200);
-    g2d.dispose();/*
-    turn = 0;
-    myGame.gameUI.addPlayer(new Player(1));
-    gameUI.addPlayer(new Player(2));
-    while (!(gameUI.findEnd())) {
-      if (turn >= gameUI.getBoard().getGamePlayers().size()) {
-        turn = 0;
-      }
-      int roll = random.nextInt(5) + 1;
-      player = turn + 1;
-      System.out.println("player " + player + "'s turn ");
-      System.out.println("dice rolling...");
-      gameUI.getBoard().getGamePlayers().get(turn).move(roll);
-      System.out.println("player " + player + " advanced " + roll + " tiles, landing on tile " + gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos());
-      String in = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getGamePlayers().get(turn).getPlayerPos()].tileAction(gameUI, turn);
-      setDialog(in);
-      posx = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getGamePlayers().get(player).getPlayerPos()].getTilePosx();
-      posy = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getGamePlayers().get(player).getPlayerPos()].getTilePosy();
-      //g2d.fill(new Ellipse2D.Float(0, 0, 40, 40));
-      //g2d.dispose();
+    //player two
+    g2d.setColor(Color.BLUE);
+    int posx2 = myGame.Posx(2)+20;
+    int posy2 = myGame.Posy(2)+20;
+    g2d.fill(new Rectangle(posx2, posy2, 20, 20));
     
-      turn++;
-    }*/
+    g2d.dispose();
     return img;
   }
   

@@ -75,8 +75,45 @@ public class Game{
     gameUI.addTile(new PropertyTile("Vermont Avenue", 8, 0,-1, -1,  100), 8);
     gameUI.addTile(new PropertyTile("Connecticut Avenue", 9, 0, -1, -1,  120), 9);
     gameUI.addTile(new Tile("Jail", 10, 0, 0), 10);
+    gameUI.addTile(new PropertyTile("St.Charles Place", 30, 490,-1, -1, 120), 11);
+    gameUI.addTile(new TaxTile("Electric Company", 30, 440, -200), 12);
+    gameUI.addTile(new PropertyTile("States Avenue", 30, 390,-1, -1, 120), 13);
+    gameUI.addTile(new PropertyTile("Viriginia Avenue", 30, 340,-1, -1, 120), 14);
+    gameUI.addTile(new PropertyTile("MOA Railroad", 30, 290,-1, -1,  200), 15);
+    gameUI.addTile(new PropertyTile("St. James Avenue", 30, 240,-1, -1,  180), 16);
+    gameUI.addTile(new CardTile("Community Chest", 30, 190, CardTile.CardStack.COMMUNITYCHEST, 0), 17);
+    gameUI.addTile(new PropertyTile("Tenesse Avenue", 30, 140,-1, -1,  200), 18);
+    gameUI.addTile(new PropertyTile("New York Avenue", 30, 90,-1, -1,  200), 19);
+    gameUI.addTile(new Tile("Free Parking", 30, 40, 0), 20);
+    gameUI.addTile(new PropertyTile("PA Avenue", 80, 40,-1, -1,  220), 21);
+    gameUI.addTile(new CardTile("Chance", 130, 40, CardTile.CardStack.CHANCE, 0), 22);
+    gameUI.addTile(new PropertyTile("PA Avenue", 180, 40,-1, -1,  220), 23);
+    gameUI.addTile(new PropertyTile("PA Avenue", 230, 40,-1, -1,  220), 24);
+    gameUI.addTile(new PropertyTile("BBO Railroad", 280, 40,-1, -1,  200), 25);
+    gameUI.addTile(new PropertyTile("Atlantic Avenue", 330, 40,-1, -1,  300), 26);
+    gameUI.addTile(new PropertyTile("Vienna Avenue", 380, 40,-1, -1,  320), 27);
+    gameUI.addTile(new PropertyTile("Water Company", 430, 40,-1, -1,  200), 28);
+    gameUI.addTile(new PropertyTile("Massachusettes Avenue", 480, 40,-1, -1,  360), 29);
+    gameUI.addTile(new Tile("Go To Jail", 520, 40, 0), 30);
+    gameUI.addTile(new PropertyTile("South Carolina Ave", 520, 90,-1, -1,  300), 31);
+    gameUI.addTile(new PropertyTile("N Carolina Ave", 520, 140,-1, -1,  300), 32);
+    gameUI.addTile(new CardTile("Community Chest", 520, 190, CardTile.CardStack.COMMUNITYCHEST, 0), 33);
+    gameUI.addTile(new PropertyTile("Empire Palace", 520, 240,-1, -1,  380), 34);
+    gameUI.addTile(new PropertyTile("Short Line", 520, 290,-1, -1,  200), 35);
+    gameUI.addTile(new CardTile("Chance", 520, 340, CardTile.CardStack.CHANCE, 0), 36);
+    gameUI.addTile(new PropertyTile("Park Place", 520, 390,-1, -1,  280), 37);
+    gameUI.addTile(new TaxTile("Luxury Tax", 520, 440, -100), 38);
+    gameUI.addTile(new PropertyTile("Broadway", 520, 490,-1, -1,  380), 39);
     //gameUI.addTile(new PropertyTile("St. Charles Place"), 0);
 
+  }
+  
+  public int Posx(int playerid){
+    return gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(playerid).getPlayerPos()].getTilePosx();
+  }
+  
+  public int Posy(int playerid){
+    return gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(playerid).getPlayerPos()].getTilePosy();
   }
   
   //advances turn
