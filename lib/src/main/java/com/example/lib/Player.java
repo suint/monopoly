@@ -56,7 +56,7 @@ public class Player {
   
   public Player(int userID) {
     this.userID = userID;
-    this.wallet = 100;
+    this.wallet = 1500;
     this.inJail = false;
     this.playerPos = 0;
     this.jailCard = false;
@@ -74,8 +74,8 @@ public class Player {
   
   public void move(int i){
     int newPos = playerPos + i;
-    if (newPos > 10){
-      newPos = newPos - 11;
+    if (newPos > 40){
+      newPos = newPos - 41;
     }
     playerPos = newPos; //would be random 1-6
   }

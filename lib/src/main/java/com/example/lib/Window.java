@@ -1,19 +1,15 @@
 package com.example.lib;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.FontRenderContext;
 import java.awt.image.BufferedImage;
+import java.awt.font.FontRenderContext;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.geom.*;
-import java.util.Random;
 
 /**
  * Created by Kelly on 5/10/2018.
@@ -29,46 +25,29 @@ class Window extends JFrame implements ActionListener {
   private Game myGame;
   private JPanel board;
   
+  //window initialize when program is run
   public Window(Game g) {
-    myGame = g;
-    g.startGame2();
-    setSize(616, 740);
+    myGame = g; //initialize game object
+    g.startGame2(); //game starting functions
+    setSize(616, 740); //size of jframe
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setTitle("Monopoly!!!");
     
-    /*JPanel inPanel = new JPanel(new GridBagLayout());
-
-    GridBagConstraints c = new GridBagConstraints();
-    
-    txtIn = new JTextField("Enter your responses here.");
-    c.gridx = 1;
-    c.gridy = 1;
-    txtIn.setFont(new Font("Helvetica", Font.PLAIN, 18));
-    inPanel.add(txtIn);
-    
-    //init button
-    enter = new JButton("Enter");
-    // enter.setBounds(80,150,100,40);
-    enter.addActionListener(this);
-    c.gridx = 2;
-    c.gridy = 1;
-    inPanel.add(enter);*/
     this.setLayout(new GridBagLayout());
-
     GridBagConstraints c = new GridBagConstraints();
 
-    c.insets=new Insets(6,6,6,6);
+    c.insets=new Insets(6,6,6,6); //padding
 
-    //Panel
+    //Board panel
 
     //import board image
       board = new JPanel() {
-        @Override
+        @Override //rewrite default paintComponent method
         protected void paintComponent(Graphics g) {
           super.paintComponent(g);
           try {
             String imgPath = new File("").getAbsolutePath();
-            imgPath = imgPath + "\\lib\\src\\main\\java\\com\\example\\lib\\monopoly.png";
+            imgPath = imgPath + "\\lib\\src\\main\\java\\com\\example\\lib\\monopoly.png"; //get absolute path of board image
             final BufferedImage image = ImageIO.read(new File(imgPath));
             g.drawImage(drawBoard(image), 0, 0, null);
           } catch (IOException e){
@@ -76,7 +55,7 @@ class Window extends JFrame implements ActionListener {
           }
         }
       };
-      board.setBorder(BorderFactory.createLineBorder(Color.black));
+      board.setBorder(BorderFactory.createLineBorder(Color.black)); //create borders
       c.gridx = 0;
       c.gridy = 0;
       c.gridwidth=4;
@@ -86,9 +65,8 @@ class Window extends JFrame implements ActionListener {
 
       this.add(board, c);
 
-    //Label
-  
-    dialog = new JLabel("Welcome to Monopoly. Type answers below. Scroll if text cuts off. Type \"help\" to see extra commands.");
+    //Game info label
+    dialog = new JLabel("Welcome to Monopoly. Type answers below. Scroll if text cuts off.");
     dialogContainer = new JScrollPane(dialog);
     dialogContainer.getVerticalScrollBar().setPreferredSize (new Dimension(0,0));
     dialogContainer.getHorizontalScrollBar().setPreferredSize (new Dimension(0,0));
@@ -105,10 +83,10 @@ class Window extends JFrame implements ActionListener {
 
     this.add(dialogContainer,c);
 
-    //Text
+    //Text input field
 
     txtIn=new JTextField();
-    txtIn.setText("Type commands here.");
+    txtIn.setText("Type commands here. Click enter if no commands are prompted");
     JScrollPane pane=new JScrollPane(txtIn);
 
     c.gridx=0;
@@ -119,7 +97,7 @@ class Window extends JFrame implements ActionListener {
 
     add(pane,c);
 
-    //Button
+    //Enter Button
 
     JButton button=new JButton("Enter");
     button.addActionListener(this);
@@ -132,42 +110,67 @@ class Window extends JFrame implements ActionListener {
     c.fill=GridBagConstraints.NONE;
 
     add(button,c);
-
   }
   
   public void actionPerformed(ActionEvent a) {
+    //gets input from text field
     s = txtIn.getText();
+    
+    //deals with input in text field, gets info about current player
+    String prevPlayer = myGame.getIn(s);
+    
+    //advances turn
     myGame.nextTurn();
-    setDialog(myGame.getInfo());
+    
+    //sets text in dialog box
+    setDialog(prevPlayer + myGame.getInfo());
+    
+    //check if player lost
+    
+    
+    //reset dialog box
+    txtIn.setText("");
+    
+    //update board panel
     board.repaint();
   }
 
+  //edits default monopoly board to draw player positions
   protected BufferedImage drawBoard(BufferedImage img) {
     myGame.initTiles();
     Graphics2D g2d = img.createGraphics();
     
     //player one
     g2d.setColor(Color.RED);
-    int posx1 = myGame.Posx(1);
-    int posy1 = myGame.Posy(1);
+    int posx1 = myGame.posX(myGame.playerPos(1));
+    int posy1 = myGame.posY(myGame.playerPos(1));
     g2d.fill(new Rectangle(posx1, posy1, 20, 20));
     
     //player two
     g2d.setColor(Color.BLUE);
-    int posx2 = myGame.Posx(2)+20;
-    int posy2 = myGame.Posy(2)+20;
+    int posx2 = myGame.posX(myGame.playerPos(2))+20;
+    int posy2 = myGame.posY(myGame.playerPos(2))+20;
     g2d.fill(new Rectangle(posx2, posy2, 20, 20));
+    
+    //owned tiles
+    /*g2d.setColor(Color.black);
+    g2d.setFont(new Font("Sans Serif", Font.PLAIN, 20));
+    FontRenderContext frc = g2d.getFontRenderContext();
+    
+    for (int i = 0; i < 41; i++){
+      if (myGame.whoOwnsTile(i) != 0) {
+        String whoOwns = "" + myGame.whoOwnsTile(i);
+        g2d.drawString(whoOwns, myGame.posX(myGame.whoOwnsTile(i)), myGame.posY(myGame.whoOwnsTile(i)));
+      }
+    }*/
     
     g2d.dispose();
     return img;
   }
   
+  //changes dialog label text
   public void setDialog(String s){
     dialog.setText(s);
-  }
-  
-  public String getDialog(){
-    return dialog.getText();
   }
   
   public static void main(String[] args) {

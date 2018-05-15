@@ -11,8 +11,9 @@ public class TaxTile extends Tile {
   }
   
   public String tileAction(Interaction i, int player){
-   String s = Math.abs(this.getTileValue()) + "";
-   return s;
-
+    i.getBoard().getPlayer(player).addMoney(this.getTileValue());
+    String s = Math.abs(this.getTileValue()) + "";
+    return s;
+  
   }
 }

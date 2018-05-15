@@ -80,13 +80,21 @@ public class Tile {
     setTilePos(0, 0, 0);
     this.ownerID = 0;
   }
-
+  
   public String tileAction(Interaction i, int player){
-    System.out.println("You have landed on " + tileName + ".");
-    int price = this.tileValue;
-    i.getBoard().getGamePlayers().get(player).addMoney(price);
-    String s = "tile";
+    
+    String s = "You have landed on " + tileName + ".";
+    if(i.getBoard().getGameTiles()[i.getBoard().getPlayer(player).getPlayerPos()].getTileName().equals("Go To Jail")
+            &&  i.getBoard().getPlayer(player).hasJailCard()==false) {
+      i.getBoard().getPlayer(player).setInJail(true);
+      i.getBoard().getPlayer(player).setPlayerPos(10);
+    }
+    else{
+      int price = this.tileValue;
+      i.getBoard().getGamePlayers().get(player).addMoney(price);
+    }
     return s;
+    //can update this later with jail functions;
   }
   
 }

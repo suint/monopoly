@@ -1,8 +1,5 @@
 package com.example.lib;
-import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.Random;
-import javax.swing.*;
 
 public class Game{
   private Interaction gameUI = new UI();
@@ -10,11 +7,12 @@ public class Game{
   private int player;
   private int turn;
   
+  //starting game functions - initializing players, tiles, turn counter
   public void startGame2(){
     turn = 0;
+    player = 1;
     gameUI.addPlayer(new Player(1));
     gameUI.addPlayer(new Player(2));
-    System.out.println("game inits");
     initTiles();
   }
   
@@ -61,67 +59,98 @@ public class Game{
     gameUI.showEnd();
   }*/
   
+  public int whoOwnsTile(int i){
+    return gameUI.getBoard().getGameTiles()[i].getOwnerID();
+  }
+  
+  public int playerLocation(int i){
+    return gameUI.getBoard().getPlayer(i).getPlayerPos();
+  }
+  
+  //initializes tile array
   public void initTiles() {
-    //tile adding - FIRST 11 TILES ONLY
-    //http://allaboutfunandgames.com/wp-content/uploads/2012/02/Monopoly-Board.jpg
-    gameUI.addTile(new Tile("GO", 0, 0, 100), 0);
-    gameUI.addTile(new PropertyTile("Mediterranean Avenue", 1, 0, -1, -1, 60), 1);
-    gameUI.addTile(new CardTile("Community Chest", 2, 0, CardTile.CardStack.COMMUNITYCHEST, 0), 2);
-    gameUI.addTile(new PropertyTile("Baltic Avenue", 3, 0,-1, -1, 60), 3);
-    gameUI.addTile(new TaxTile("Income Tax", 4, 0, -200), 4); //original tile is $200 or 10%
-    gameUI.addTile(new PropertyTile("Reading Railroad", 5, 0,-1, -1,  200), 5);
-    gameUI.addTile(new PropertyTile("Oriental Avenue", 6, 0,-1, -1, 100), 6);
-    gameUI.addTile(new CardTile("Chance", 7, 0, CardTile.CardStack.CHANCE, 0), 7);
-    gameUI.addTile(new PropertyTile("Vermont Avenue", 8, 0,-1, -1,  100), 8);
-    gameUI.addTile(new PropertyTile("Connecticut Avenue", 9, 0, -1, -1,  120), 9);
-    gameUI.addTile(new Tile("Jail", 10, 0, 0), 10);
-    gameUI.addTile(new PropertyTile("St.Charles Place", 30, 490,-1, -1, 120), 11);
-    gameUI.addTile(new TaxTile("Electric Company", 30, 440, -200), 12);
-    gameUI.addTile(new PropertyTile("States Avenue", 30, 390,-1, -1, 120), 13);
-    gameUI.addTile(new PropertyTile("Viriginia Avenue", 30, 340,-1, -1, 120), 14);
-    gameUI.addTile(new PropertyTile("MOA Railroad", 30, 290,-1, -1,  200), 15);
-    gameUI.addTile(new PropertyTile("St. James Avenue", 30, 240,-1, -1,  180), 16);
+    gameUI.addTile(new Tile("GO", 520, 520, 100), 0);
+    gameUI.addTile(new PropertyTile("Mediterranean Avenue", 480, 520, -1, -1, 60), 1);
+    gameUI.addTile(new CardTile("Community Chest", 430, 520, CardTile.CardStack.COMMUNITYCHEST, 0), 2);
+    gameUI.addTile(new PropertyTile("Baltic Avenue", 380, 520,-1, -1, 60), 3);
+    gameUI.addTile(new TaxTile("Income Tax", 330, 520, -200), 4);
+    gameUI.addTile(new PropertyTile("Reading Railroad", 280, 520,-1, -1,  200), 5);
+    gameUI.addTile(new PropertyTile("Oriental Avenue", 230, 520,-1, -1, 100), 6);
+    gameUI.addTile(new CardTile("Chance", 180, 520, CardTile.CardStack.CHANCE, 0), 7);
+    gameUI.addTile(new PropertyTile("Vermont Avenue", 130, 520,-1, -1,  100), 8);
+    gameUI.addTile(new PropertyTile("Connecticut Avenue", 80, 520, -1, -1,  120), 9);
+    gameUI.addTile(new Tile("Jail", 30, 520, 0), 10);
+    gameUI.addTile(new PropertyTile("St. Charles Place", 30, 490,-1, -1, 140), 11);
+    gameUI.addTile(new PropertyTile("Electric Company", 30, 440, -200), 12);
+    gameUI.addTile(new PropertyTile("States Avenue", 30, 390,-1, -1, 140), 13);
+    gameUI.addTile(new PropertyTile("Virginia Avenue", 30, 340,-1, -1, 160), 14);
+    gameUI.addTile(new PropertyTile("PA Railroad", 30, 290,-1, -1,  200), 15);
+    gameUI.addTile(new PropertyTile("St. James Place", 30, 240,-1, -1,  180), 16);
     gameUI.addTile(new CardTile("Community Chest", 30, 190, CardTile.CardStack.COMMUNITYCHEST, 0), 17);
-    gameUI.addTile(new PropertyTile("Tenesse Avenue", 30, 140,-1, -1,  200), 18);
-    gameUI.addTile(new PropertyTile("New York Avenue", 30, 90,-1, -1,  200), 19);
+    gameUI.addTile(new PropertyTile("Tennessee Avenue", 30, 140,-1, -1,  180), 18);
+    gameUI.addTile(new PropertyTile("NY Avenue", 30, 90,-1, -1,  200), 19);
     gameUI.addTile(new Tile("Free Parking", 30, 40, 0), 20);
-    gameUI.addTile(new PropertyTile("PA Avenue", 80, 40,-1, -1,  220), 21);
+    gameUI.addTile(new PropertyTile("KY Avenue", 80, 40,-1, -1,  220), 21);
     gameUI.addTile(new CardTile("Chance", 130, 40, CardTile.CardStack.CHANCE, 0), 22);
-    gameUI.addTile(new PropertyTile("PA Avenue", 180, 40,-1, -1,  220), 23);
-    gameUI.addTile(new PropertyTile("PA Avenue", 230, 40,-1, -1,  220), 24);
+    gameUI.addTile(new PropertyTile("IN Avenue", 180, 40,-1, -1,  220), 23);
+    gameUI.addTile(new PropertyTile("IL Avenue", 230, 40,-1, -1,  240), 24);
     gameUI.addTile(new PropertyTile("BBO Railroad", 280, 40,-1, -1,  200), 25);
-    gameUI.addTile(new PropertyTile("Atlantic Avenue", 330, 40,-1, -1,  300), 26);
-    gameUI.addTile(new PropertyTile("Vienna Avenue", 380, 40,-1, -1,  320), 27);
-    gameUI.addTile(new PropertyTile("Water Company", 430, 40,-1, -1,  200), 28);
-    gameUI.addTile(new PropertyTile("Massachusettes Avenue", 480, 40,-1, -1,  360), 29);
+    gameUI.addTile(new PropertyTile("Atlantic Avenue", 330, 40,-1, -1,  260), 26);
+    gameUI.addTile(new PropertyTile("Ventnor Avenue", 380, 40,-1, -1,  260), 27);
+    gameUI.addTile(new PropertyTile("Water Works", 430, 40,-1, -1,  150), 28);
+    gameUI.addTile(new PropertyTile("Marvin Gardens", 480, 40,-1, -1,  280), 29);
     gameUI.addTile(new Tile("Go To Jail", 520, 40, 0), 30);
-    gameUI.addTile(new PropertyTile("South Carolina Ave", 520, 90,-1, -1,  300), 31);
+    gameUI.addTile(new PropertyTile("Pacific Ave", 520, 90,-1, -1,  300), 31);
     gameUI.addTile(new PropertyTile("N Carolina Ave", 520, 140,-1, -1,  300), 32);
     gameUI.addTile(new CardTile("Community Chest", 520, 190, CardTile.CardStack.COMMUNITYCHEST, 0), 33);
-    gameUI.addTile(new PropertyTile("Empire Palace", 520, 240,-1, -1,  380), 34);
+    gameUI.addTile(new PropertyTile("Pennsylvania Ave", 520, 240,-1, -1,  320), 34);
     gameUI.addTile(new PropertyTile("Short Line", 520, 290,-1, -1,  200), 35);
     gameUI.addTile(new CardTile("Chance", 520, 340, CardTile.CardStack.CHANCE, 0), 36);
-    gameUI.addTile(new PropertyTile("Park Place", 520, 390,-1, -1,  280), 37);
+    gameUI.addTile(new PropertyTile("Park Place", 520, 390,-1, -1,  350), 37);
     gameUI.addTile(new TaxTile("Luxury Tax", 520, 440, -100), 38);
-    gameUI.addTile(new PropertyTile("Broadway", 520, 490,-1, -1,  380), 39);
-    //gameUI.addTile(new PropertyTile("St. Charles Place"), 0);
-
+    gameUI.addTile(new PropertyTile("Boardwalk", 520, 490,-1, -1,  400), 39);
   }
   
-  public int Posx(int playerid){
-    return gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(playerid).getPlayerPos()].getTilePosx();
+  //find X position of tile by number
+  public int posX(int tile){
+    return gameUI.getBoard().getGameTiles()[tile].getTilePosx();
   }
   
-  public int Posy(int playerid){
-    return gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(playerid).getPlayerPos()].getTilePosy();
+  //find Y position of tile by number
+  public int posY(int tile){
+    return gameUI.getBoard().getGameTiles()[tile].getTilePosy();
   }
   
-  //advances turn
+  //find position of player by player ID
+  public int playerPos(int playerID){
+    return gameUI.getBoard().getPlayer(playerID).getPlayerPos();
+  }
+  
+  //advances turn, moves players forward based on dice roll
   public void nextTurn(){
     turn++;
     player = (turn%2) + 1;
-    int roll = random.nextInt(5) + 1;
-    gameUI.getBoard().getPlayer(player).move(roll);
+    if (!(gameUI.getBoard().getPlayer(player).isInJail())) {
+      int roll = random.nextInt(5) + 1;
+      gameUI.getBoard().getPlayer(player).move(roll);
+    }
+  }
+  
+  //get information based on text input
+  public String getIn(String s){
+    String n = "";
+    int currentTile = gameUI.getBoard().getPlayer(player).getPlayerPos();
+    if (gameUI.getBoard().getGameTiles()[currentTile] instanceof PropertyTile){
+      if (s.equals("y") && gameUI.getBoard().getGameTiles()[currentTile].getOwnerID() == 0){
+        gameUI.getBoard().getGameTiles()[currentTile].tileAction(gameUI, player);
+        int cost = -1 * gameUI.getBoard().getGameTiles()[currentTile].getTileValue();
+        System.out.println("property bought for " + gameUI.getBoard().getGameTiles()[currentTile].getTileValue());
+        gameUI.getBoard().getPlayer(player).addMoney(cost);
+        n = gameUI.getBoard().getGameTiles()[currentTile].getTileName() + " was bought by player " + player + ". ";
+      }
+    }
+    n += "Player " + player + " now has " + gameUI.getBoard().getPlayer(player).getWallet() + " dollars.";
+    return n;
   }
   
   public int getTurn(){
@@ -131,22 +160,52 @@ public class Game{
   //returns information about current player
   public String getInfo(){
     int playerPos = gameUI.getBoard().getPlayer(player).getPlayerPos();
+    
     String s = "Player " + player + " advanced to the tile " + gameUI.getBoard().getGameTiles()[playerPos].getTileName() + ". ";
+    
     if (gameUI.getBoard().getGameTiles()[playerPos] instanceof CardTile){
       String cardID = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(player).getPlayerPos()].tileAction(gameUI, player).split("#")[0];
       String cardType = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(player).getPlayerPos()].tileAction(gameUI, player).split("#")[1];
+    
       s += useCard(cardID, player, cardType);
     } else if (gameUI.getBoard().getGameTiles()[playerPos] instanceof PropertyTile){
-      s += " Would you like to purchase this tile? Type \"y\" if yes, \"n\" if no.";
+      if (gameUI.getBoard().getGameTiles()[playerPos].getOwnerID() == 0) {
+        s += " Would you like to purchase this tile for " + gameUI.getBoard().getGameTiles()[playerPos].getTileValue() + " dollars? Type \"y\" if yes, \"n\" if no.";
+      } else if (gameUI.getBoard().getGameTiles()[playerPos].getOwnerID() == player){
+        s += " You admire your property.";
+      } else {
+        s += " This property is owned by " + gameUI.getBoard().getGameTiles()[playerPos].getOwnerID() +
+                ". You pay " + getRent(playerPos) + " dollars.";
+      }
     } else if (gameUI.getBoard().getGameTiles()[playerPos] instanceof TaxTile){
       String tax = gameUI.getBoard().getGameTiles()[playerPos].tileAction(gameUI, player);
       s += " You have been taxed " + tax;
       gameUI.getBoard().getPlayer(player).addMoney(Integer.parseInt(tax));
+    } else {
+      if (gameUI.getBoard().getGameTiles()[playerPos].getTileName().equals("GO")){
+        s += " You receive 200 dollars.";
+        gameUI.getBoard().getPlayer(player).addMoney(200);
+      } else if (gameUI.getBoard().getGameTiles()[playerPos].getTileName().equals("Jail")){
+        if (gameUI.getBoard().getPlayer(player).isInJail()){
+          s += " You feel sorry for yourself.";
+        } else {
+          s += " You say hi to the jailbirds.";
+        }
+      } else if (gameUI.getBoard().getGameTiles()[playerPos].getTileName().equals("Free Parking")){
+        s += " You enjoy the freedom of the parking.";
+      } else if (gameUI.getBoard().getGameTiles()[playerPos].getTileName().equals("Go To Jail")){
+        s += " You go to jail.";
+      }
     }
     return s;
   }
   
+  public int getRent(int tile){
+    int i = Integer.parseInt(gameUI.getBoard().getGameTiles()[tile].tileAction(gameUI, player));
+    return i;
+  }
   
+  //functions implementing cards
   public String useCard(String s, int player, String type) {
     //display string in textbox
     String flavorText = "";
@@ -175,8 +234,9 @@ public class Game{
       case "avdtoutil":
         //advance to nearest utility
         //write this later when all tiles are set
-        gameUI.getBoard().getPlayer(player).setPlayerPos(5);
-        flavorText = flavorText + "\nAdvance token to nearest Utility. \nIf unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown.";
+        gameUI.getBoard().getPlayer(player).setPlayerPos(28);
+        flavorText = flavorText + "\nAdvance token to Water Works. \nIf unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown.";
+        
         break;
       case "bankpays50":
         gameUI.getBoard().getPlayer(player).addMoney(50);
@@ -257,7 +317,7 @@ public class Game{
           if (!(i == player))
             gameUI.getBoard().getPlayer(i).addMoney(-50);
         }
-        flavorText = flavorText + "\nGrand Opera Night—Collect $50 from every player for opening night seats";
+        flavorText = flavorText + "\nGrand Opera Night—Collect $50 from the other player for opening night seats";
         break;
       case "holiday100":
         gameUI.getBoard().getPlayer(player).addMoney(100);
