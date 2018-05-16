@@ -1,4 +1,5 @@
 package com.example.lib;
+import java.util.Random;
 
 /**
  * Created by Kelly on 4/16/2018.
@@ -6,15 +7,6 @@ package com.example.lib;
 
 public class PropertyTile extends Tile {
   private int numHouses;
-  
-  public int getNumHouses(){
-    return numHouses;
-  }
-
-  public PropertyTile(){
-    numHouses = 0;
-    this.setOwnable(true);
-  }
   
   public PropertyTile(String name, int posx, int posy, int numHouses, int id, int t) {
     super(name, posx, posy, t);
@@ -39,31 +31,36 @@ public class PropertyTile extends Tile {
       otherPlayer = 1;
     }
     
+    //if not already owned
     if (this.getOwnable()) {
       this.numHouses++;
       this.setOwnerID(player);
       this.setOwnable(false);
     } //once bought cannot change hands
     
+    //finds rent to charge on tile - varies depending on color of property, checks for monopoly
     int rent = 0;
     String tileName = i.getBoard().getGameTiles()[i.getBoard().getPlayer(player).getPlayerPos()].getTileName();
     switch (tileName) {
-      case "Mediterranean Avenue":
-      case "Baltic Avenue":
-        if (i.getBoard().getGameTiles()[1].getOwnerID() == otherPlayer && i.getBoard().getGameTiles()[3].getOwnerID() == otherPlayer) { //check for monopoly
-          rent = 40;
+      case "Electric Company":case "Water Works": //utilities
+        Random r = new Random();
+        if (i.getBoard().getGameTiles()[12].getOwnerID() == otherPlayer && i.getBoard().getGameTiles()[28].getOwnerID() == otherPlayer){
+          rent = (r.nextInt(6) + 1) * 10;
         } else {
-          rent = 20;
+          rent = (r.nextInt(6) + 1) * 4;
         }
         break;
       case "Reading Railroad":
-      case "Short Line":
+      case "Short Line":case "PA Railroad":case "BBO Railroad": //railroads
         int numRR = 0;
-        for (int j = 5; j < 46; j += 10) {
-          if (i.getBoard().getGameTiles()[j].getOwnerID() == otherPlayer) {
-            numRR++;
-          }
-        }
+        if (i.getBoard().getGameTiles()[5].getOwnerID() == otherPlayer)
+          numRR++;
+        if (i.getBoard().getGameTiles()[15].getOwnerID() == otherPlayer)
+          numRR++;
+        if (i.getBoard().getGameTiles()[25].getOwnerID() == otherPlayer)
+          numRR++;
+        if (i.getBoard().getGameTiles()[35].getOwnerID() == otherPlayer)
+          numRR++; //check for railroad monopoly
         switch (numRR) {
           case 1:
             rent = 25;
@@ -77,6 +74,14 @@ public class PropertyTile extends Tile {
           case 4:
             rent = 200;
             break;
+        }
+        break;
+      case "Mediterranean Avenue":
+      case "Baltic Avenue":
+        if (i.getBoard().getGameTiles()[1].getOwnerID() == otherPlayer && i.getBoard().getGameTiles()[3].getOwnerID() == otherPlayer) { //check for monopoly
+          rent = 40;
+        } else {
+          rent = 20;
         }
         break;
       case "Oriental Avenue":
@@ -142,34 +147,7 @@ public class PropertyTile extends Tile {
         }
         break;
     }
-        
-    
     s += rent;
     return s;
-    
-    /*
-    String s = "no";
-    String a = "";
-    PropertyTile x = (PropertyTile)i.getBoard().getGameTiles()[i.getBoard().getGamePlayers().get(player).getPlayerPos()];
-    int owned = x.getNumHouses();
-    int price = x.getTileValue();
-    if (owned == -1) {
-      System.out.println("You have landed on a property tile. Would you like to purchase this property that is worth " + price);
-      s = i.getUserInput();
-      if (s.equals("yes")) {
-        x.setOwnerID(i.getBoard().getGamePlayers().get(player).getUserID());
-        i.getBoard().getGamePlayers().get(player).addMoney(0 - price);
-        x.addHouse();
-      } else if (s.equals("no")) {
-      
-      }
-    } else if (owned == 0) {
-      if(x.getOwnerID()!=i.getBoard().getGamePlayers().get(player).getUserID())
-        i.getBoard().getGamePlayers().get(player).addMoney((int)(0 - price*0.5));
-      //fill in else; aka prompt users to build houses or not; optional
-    }
-
-    return a;*/
   }
-  
 }

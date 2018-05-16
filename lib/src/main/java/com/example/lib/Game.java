@@ -1,6 +1,9 @@
 package com.example.lib;
 import java.util.Random;
 
+//this class has most of the major game functions and interacts with internal game information via the
+//UI object that it holds.
+
 public class Game{
   private Interaction gameUI = new UI();
   private Random random = new Random();
@@ -10,12 +13,13 @@ public class Game{
   //starting game functions - initializing players, tiles, turn counter
   public void startGame2(){
     turn = 0;
-    player = 1;
+    player = 0;
     gameUI.addPlayer(new Player(1));
     gameUI.addPlayer(new Player(2));
     initTiles();
   }
   
+  //game via console
   /*public void startGame() {
     
     gameUI.showIntro();
@@ -58,14 +62,6 @@ public class Game{
     }
     gameUI.showEnd();
   }*/
-  
-  public int whoOwnsTile(int i){
-    return gameUI.getBoard().getGameTiles()[i].getOwnerID();
-  }
-  
-  public int playerLocation(int i){
-    return gameUI.getBoard().getPlayer(i).getPlayerPos();
-  }
   
   //initializes tile array
   public void initTiles() {
@@ -126,10 +122,14 @@ public class Game{
     return gameUI.getBoard().getPlayer(playerID).getPlayerPos();
   }
   
+  //allow window to access whether game has ended
+  public int findEnd(){
+    return gameUI.findEnd();  }
+  
   //advances turn, moves players forward based on dice roll
   public void nextTurn(){
-    turn++;
     player = (turn%2) + 1;
+    turn++;
     if (!(gameUI.getBoard().getPlayer(player).isInJail())) {
       int roll = random.nextInt(5) + 1;
       gameUI.getBoard().getPlayer(player).move(roll);
@@ -144,48 +144,54 @@ public class Game{
       if (s.equals("y") && gameUI.getBoard().getGameTiles()[currentTile].getOwnerID() == 0){
         gameUI.getBoard().getGameTiles()[currentTile].tileAction(gameUI, player);
         int cost = -1 * gameUI.getBoard().getGameTiles()[currentTile].getTileValue();
-        System.out.println("property bought for " + gameUI.getBoard().getGameTiles()[currentTile].getTileValue());
         gameUI.getBoard().getPlayer(player).addMoney(cost);
         n = gameUI.getBoard().getGameTiles()[currentTile].getTileName() + " was bought by player " + player + ". ";
       }
     }
-    n += "Player " + player + " now has " + gameUI.getBoard().getPlayer(player).getWallet() + " dollars.";
+    if (player == 0){
+      n += "Player 1 now has " + gameUI.getBoard().getPlayer(player).getWallet() + " dollars. ";
+    } else {
+      n += "Player " + player + " now has " + gameUI.getBoard().getPlayer(player).getWallet() + " dollars. ";
+    }
     return n;
-  }
-  
-  public int getTurn(){
-    return turn;
   }
   
   //returns information about current player
   public String getInfo(){
     int playerPos = gameUI.getBoard().getPlayer(player).getPlayerPos();
     
+    //new position
     String s = "Player " + player + " advanced to the tile " + gameUI.getBoard().getGameTiles()[playerPos].getTileName() + ". ";
     
     if (gameUI.getBoard().getGameTiles()[playerPos] instanceof CardTile){
+      //if player lands on card tile, display card info
       String cardID = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(player).getPlayerPos()].tileAction(gameUI, player).split("#")[0];
       String cardType = gameUI.getBoard().getGameTiles()[gameUI.getBoard().getPlayer(player).getPlayerPos()].tileAction(gameUI, player).split("#")[1];
-    
       s += useCard(cardID, player, cardType);
     } else if (gameUI.getBoard().getGameTiles()[playerPos] instanceof PropertyTile){
       if (gameUI.getBoard().getGameTiles()[playerPos].getOwnerID() == 0) {
+        //give option to buy tile if not owned
         s += " Would you like to purchase this tile for " + gameUI.getBoard().getGameTiles()[playerPos].getTileValue() + " dollars? Type \"y\" if yes, \"n\" if no.";
       } else if (gameUI.getBoard().getGameTiles()[playerPos].getOwnerID() == player){
+        //if own property do nothing
         s += " You admire your property.";
       } else {
+        //pay rent to owner if owned by other player
         s += " This property is owned by " + gameUI.getBoard().getGameTiles()[playerPos].getOwnerID() +
                 ". You pay " + getRent(playerPos) + " dollars.";
       }
     } else if (gameUI.getBoard().getGameTiles()[playerPos] instanceof TaxTile){
+      //pay tax
       String tax = gameUI.getBoard().getGameTiles()[playerPos].tileAction(gameUI, player);
       s += " You have been taxed " + tax;
       gameUI.getBoard().getPlayer(player).addMoney(Integer.parseInt(tax));
     } else {
       if (gameUI.getBoard().getGameTiles()[playerPos].getTileName().equals("GO")){
+        //go tile
         s += " You receive 200 dollars.";
         gameUI.getBoard().getPlayer(player).addMoney(200);
       } else if (gameUI.getBoard().getGameTiles()[playerPos].getTileName().equals("Jail")){
+        //jail tile
         if (gameUI.getBoard().getPlayer(player).isInJail()){
           s += " You feel sorry for yourself.";
         } else {
@@ -194,18 +200,20 @@ public class Game{
       } else if (gameUI.getBoard().getGameTiles()[playerPos].getTileName().equals("Free Parking")){
         s += " You enjoy the freedom of the parking.";
       } else if (gameUI.getBoard().getGameTiles()[playerPos].getTileName().equals("Go To Jail")){
+        gameUI.getBoard().getGameTiles()[playerPos].tileAction(gameUI, player);
         s += " You go to jail.";
       }
     }
     return s;
   }
   
+  //retrieve amount of rent to be paid on property
   public int getRent(int tile){
     int i = Integer.parseInt(gameUI.getBoard().getGameTiles()[tile].tileAction(gameUI, player));
     return i;
   }
   
-  //functions implementing cards
+  //implements all cards
   public String useCard(String s, int player, String type) {
     //display string in textbox
     String flavorText = "";
@@ -274,8 +282,14 @@ public class Game{
       case "makerepairs":
         //pays per house
         //rewrite later
-        gameUI.getBoard().getPlayer(player).addMoney(-20);
-        flavorText = flavorText + "\nMake general repairs on all your property–For each house pay $25–For each hotel $100";
+        int pay = 0;
+        for (int i = 0; i < 41; i++){
+          if (gameUI.getBoard().getGameTiles()[i].getOwnerID() == player){
+            pay += 50;
+          }
+        }
+        gameUI.getBoard().getPlayer(player).addMoney(-1 * pay);
+        flavorText = flavorText + "\nMake general repairs on all your property–For each owned property pay $50.";
         break;
       case "gotoboardwalk":
         //no boardwalk yet...

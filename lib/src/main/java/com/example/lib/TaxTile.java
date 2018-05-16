@@ -10,6 +10,7 @@ public class TaxTile extends Tile {
     super(name, posx, posy, t);
   }
   
+  //subtracts amount and returns string with amount taxed
   public String tileAction(Interaction i, int player){
     i.getBoard().getPlayer(player).addMoney(this.getTileValue());
     String s = Math.abs(this.getTileValue()) + "";

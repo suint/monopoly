@@ -45,12 +45,12 @@ public class UI implements Interaction{
   }
   
   @Override
-  public boolean findEnd(){
-    boolean a = false;
-    for (int i = 0; i < board.getGamePlayers().size(); i++){
-      if (board.getPlayer(i).lose() == true){
-        a = true;
-      }
+  public int findEnd() {
+    int a = 0;
+    if (board.getPlayer(1).lose()) {
+      a = 2;
+    } else if (board.getPlayer(2).lose()) {
+      a = 1;
     }
     return a;
   }

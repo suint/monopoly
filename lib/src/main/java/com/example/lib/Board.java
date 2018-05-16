@@ -37,6 +37,7 @@ public class Board {
     gameTiles[x] = t; //would add tile onto end of list of tiles... not an arraylist since num of tiles is fixed
   }
   
+  //returns the player based on the playerID
   public Player getPlayer(int j){
     int id = 0;
     for (int i = 0; i < gamePlayers.size(); i++){

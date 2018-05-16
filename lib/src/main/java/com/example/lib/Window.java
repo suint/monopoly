@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.awt.font.FontRenderContext;
 import java.io.File;
 import java.io.IOException;
 
@@ -113,26 +112,33 @@ class Window extends JFrame implements ActionListener {
   }
   
   public void actionPerformed(ActionEvent a) {
-    //gets input from text field
-    s = txtIn.getText();
+      if (myGame.findEnd() == 1) {
+        JOptionPane.showMessageDialog (null, "Player 1 has won. Player 2 went bankrupt", "P2 Win", JOptionPane.INFORMATION_MESSAGE);
+      } else if (myGame.findEnd() == 2) {
+        JOptionPane.showMessageDialog (null, "Player 2 has won. Player 1 went bankrupt", "P2 Win", JOptionPane.INFORMATION_MESSAGE);
+      } else {
     
-    //deals with input in text field, gets info about current player
-    String prevPlayer = myGame.getIn(s);
+        //gets input from text field
+        s = txtIn.getText();
     
-    //advances turn
-    myGame.nextTurn();
+        //deals with input in text field, gets info about current player
+        String prevPlayer = myGame.getIn(s);
     
-    //sets text in dialog box
-    setDialog(prevPlayer + myGame.getInfo());
+        //advances turn
+        myGame.nextTurn();
     
-    //check if player lost
+        //sets text in dialog box
+        setDialog(prevPlayer + myGame.getInfo());
+    
+        //check if player lost
     
     
-    //reset dialog box
-    txtIn.setText("");
+        //reset dialog box
+        txtIn.setText("");
     
-    //update board panel
-    board.repaint();
+        //update board panel
+        board.repaint();
+      }
   }
 
   //edits default monopoly board to draw player positions
@@ -140,30 +146,18 @@ class Window extends JFrame implements ActionListener {
     myGame.initTiles();
     Graphics2D g2d = img.createGraphics();
     
-    //player one
+      //player one
     g2d.setColor(Color.RED);
     int posx1 = myGame.posX(myGame.playerPos(1));
     int posy1 = myGame.posY(myGame.playerPos(1));
     g2d.fill(new Rectangle(posx1, posy1, 20, 20));
-    
+  
     //player two
     g2d.setColor(Color.BLUE);
-    int posx2 = myGame.posX(myGame.playerPos(2))+20;
-    int posy2 = myGame.posY(myGame.playerPos(2))+20;
+    int posx2 = myGame.posX(myGame.playerPos(2)) + 20;
+    int posy2 = myGame.posY(myGame.playerPos(2)) + 20;
     g2d.fill(new Rectangle(posx2, posy2, 20, 20));
-    
-    //owned tiles
-    /*g2d.setColor(Color.black);
-    g2d.setFont(new Font("Sans Serif", Font.PLAIN, 20));
-    FontRenderContext frc = g2d.getFontRenderContext();
-    
-    for (int i = 0; i < 41; i++){
-      if (myGame.whoOwnsTile(i) != 0) {
-        String whoOwns = "" + myGame.whoOwnsTile(i);
-        g2d.drawString(whoOwns, myGame.posX(myGame.whoOwnsTile(i)), myGame.posY(myGame.whoOwnsTile(i)));
-      }
-    }*/
-    
+  
     g2d.dispose();
     return img;
   }

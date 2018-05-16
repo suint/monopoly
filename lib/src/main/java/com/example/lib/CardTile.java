@@ -14,8 +14,7 @@ public class CardTile extends Tile {
   public String[] cardList;
   public CardStack type;
   
-  //when created generates random list of cards
-  
+  //when created generates list of cards
   public CardTile(String name, int posx, int posy, CardStack c, int v) {
     super(name, posx, posy, v);
     this.type = c;
@@ -26,6 +25,7 @@ public class CardTile extends Tile {
     super("a", 0,0,1);
   }
   
+  //each card is represented by a code
   private String[] makeCards(){
     String[] cards = new String[14];
     if (type == CardStack.CHANCE){
@@ -63,6 +63,7 @@ public class CardTile extends Tile {
     return cards;
   }
 
+  //returns card code and code for community vs chance
   public String tileAction(Interaction i, int player) {
     int roll = new Random().nextInt(14) ;
     String s = cardList[roll];

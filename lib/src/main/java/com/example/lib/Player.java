@@ -12,6 +12,7 @@ public class Player {
   public int playerPos;
   public boolean jailCard; //whether user has get out of jail free card
   
+  //all the getters and setters for Player
   public int getUserID() {
     return userID;
   }
@@ -71,7 +72,7 @@ public class Player {
     return a;
   }
   
-  
+  //moves the player based on the number from random dice roll
   public void move(int i){
     int newPos = playerPos + i;
     if (newPos > 40){

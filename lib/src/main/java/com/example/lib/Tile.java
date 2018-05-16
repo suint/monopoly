@@ -15,12 +15,14 @@ public class Tile {
   //http://allaboutfunandgames.com/wp-content/uploads/2012/02/Monopoly-Board.jpg
   
   private String tileName;
-  
+  //position for players on that tile
   private int tilePosx;
   private int tilePosy;
+  //varies depending on type of tile
   private int tileValue;
-  //tile position is just one number since the tiles are just consecutive
+  //id of player owning
   private int ownerID;
+  //whether it's been bought, false if not property tile
   private boolean ownable;
   
   public int getOwnerID() {
@@ -71,8 +73,6 @@ public class Tile {
     this.tileValue = v;
     this.ownable = false;
     this.ownerID = 0;
-
-    //System.out.println(getTileFace());
   }
   
   protected Tile(){
@@ -82,19 +82,18 @@ public class Tile {
   }
   
   public String tileAction(Interaction i, int player){
-    
     String s = "You have landed on " + tileName + ".";
+    
+    //go to jail tile
     if(i.getBoard().getGameTiles()[i.getBoard().getPlayer(player).getPlayerPos()].getTileName().equals("Go To Jail")
             &&  i.getBoard().getPlayer(player).hasJailCard()==false) {
       i.getBoard().getPlayer(player).setInJail(true);
       i.getBoard().getPlayer(player).setPlayerPos(10);
-    }
-    else{
+    } else {
       int price = this.tileValue;
       i.getBoard().getGamePlayers().get(player).addMoney(price);
     }
     return s;
-    //can update this later with jail functions;
   }
   
 }
